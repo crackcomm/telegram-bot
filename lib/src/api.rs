@@ -84,9 +84,9 @@ impl Api {
     /// Using default connector.
     ///
     /// ```rust
-    /// # extern crate telegram_bot;
+    /// # extern crate telegram_bot_fork;
     /// # extern crate tokio;
-    /// use telegram_bot::Api;
+    /// use telegram_bot_fork::Api;
     ///
     /// # fn main() {
     /// # let telegram_token = "token";
@@ -98,12 +98,12 @@ impl Api {
     ///
     ///
     /// ```rust
-    /// # extern crate telegram_bot;
+    /// # extern crate telegram_bot_fork;
     /// # extern crate tokio;
     /// # #[cfg(feature = "hyper_connector")]
     /// # fn main() {
-    /// use telegram_bot::Api;
-    /// use telegram_bot::connector::hyper;
+    /// use telegram_bot_fork::Api;
+    /// use telegram_bot_fork::connector::hyper;
     ///
     /// # let telegram_token = "token";
     /// let api = Api::configure(telegram_token)
@@ -127,9 +127,9 @@ impl Api {
     ///
     /// ```rust
     /// # extern crate futures;
-    /// # extern crate telegram_bot;
+    /// # extern crate telegram_bot_fork;
     /// # extern crate tokio;
-    /// # use telegram_bot::Api;
+    /// # use telegram_bot_fork::Api;
     /// # fn main() {
     /// # let api: Api = Api::configure("token").build().unwrap();
     /// use futures::Stream;
@@ -150,11 +150,11 @@ impl Api {
     ///
     /// ```rust
     /// # extern crate futures;
-    /// # extern crate telegram_bot;
+    /// # extern crate telegram_bot_fork;
     /// # extern crate tokio;
     /// # use futures::Future;
-    /// # use telegram_bot::{Api, GetMe, ChatId};
-    /// # use telegram_bot::prelude::*;
+    /// # use telegram_bot_fork::{Api, GetMe, ChatId};
+    /// # use telegram_bot_fork::prelude::*;
     /// #
     /// # fn main() {
     /// # let telegram_token = "token";
@@ -175,10 +175,10 @@ impl Api {
     ///
     /// ```rust
     /// # extern crate futures;
-    /// # extern crate telegram_bot;
+    /// # extern crate telegram_bot_fork;
     /// # extern crate tokio;
     /// # use futures::Future;
-    /// # use telegram_bot::{Api, GetMe};
+    /// # use telegram_bot_fork::{Api, GetMe};
     /// #
     /// # fn main() {
     /// # let telegram_token = "token";
@@ -215,10 +215,10 @@ impl Api {
     ///
     /// ```rust
     /// # extern crate futures;
-    /// # extern crate telegram_bot;
+    /// # extern crate telegram_bot_fork;
     /// # extern crate tokio;
     /// # use futures::Future;
-    /// # use telegram_bot::{Api, GetMe};
+    /// # use telegram_bot_fork::{Api, GetMe};
     /// #
     /// # fn main() {
     /// # let telegram_token = "token";

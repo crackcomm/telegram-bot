@@ -1,12 +1,12 @@
 extern crate futures;
-extern crate telegram_bot;
+extern crate telegram_bot_fork;
 extern crate tokio;
 
 use std::env;
 
 use futures::{future::lazy, Stream};
 
-use telegram_bot::*;
+use telegram_bot_fork::*;
 
 fn process(api: Api, message: Message) {
     if let MessageKind::Text { ref data, .. } = message.kind {

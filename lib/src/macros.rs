@@ -2,7 +2,7 @@
 ///
 /// # Examples
 /// ```
-/// # #[macro_use] extern crate telegram_bot;
+/// # #[macro_use] extern crate telegram_bot_fork;
 /// # fn main() {
 /// let reply_keyboard = reply_markup!(reply_keyboard, selective, one_time, resize,
 ///     ["button", "button"],

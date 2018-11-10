@@ -1,11 +1,11 @@
 [package]
 name = "telegram-bot-fork-raw"
-version = "0.7.2"
+version = "0.7.3"
 authors = ["Lukas Kalbertodt <lukas.kalbertodt@gmail.com>", "Fedor Gogolev <knsd@knsd.net>", "Emulator000 <emulator@hotmail.it>"]
 
 description = "Telegram Bot API types"
 
-documentation = "https://docs.rs/telegram-bot-raw/"
+documentation = "https://docs.rs/telegram-bot-fork-raw/"
 repository = "https://github.com/Emulator000/telegram-bot"
 readme = "../README.md"
 
