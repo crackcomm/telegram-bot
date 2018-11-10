@@ -1,12 +1,12 @@
 extern crate futures;
-extern crate telegram_bot;
+extern crate telegram_bot_fork;
 extern crate tokio;
 
 use std::env;
 
 use futures::{future::lazy, Future};
 
-use telegram_bot::*;
+use telegram_bot_fork::*;
 
 fn main() {
     let mut runtime = tokio::runtime::current_thread::Runtime::new().unwrap();

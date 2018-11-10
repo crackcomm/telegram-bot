@@ -1,5 +1,5 @@
 extern crate futures;
-extern crate telegram_bot;
+extern crate telegram_bot_fork;
 extern crate tokio;
 extern crate tokio_timer;
 
@@ -11,7 +11,7 @@ use futures::{future::lazy, Future, Stream};
 
 use tokio_timer::Delay;
 
-use telegram_bot::*;
+use telegram_bot_fork::*;
 
 fn test(api: Api, message: Message) {
     let timeout = |n| Delay::new(Instant::now().add(Duration::from_secs(n))).map_err(From::from);
