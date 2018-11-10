@@ -10,10 +10,10 @@ cargo doc --all
 cd target/doc/
 
 git init
-git config user.name "Lukas Kalbertodt"
-git config user.email "lukas.kalbertodt@gmail.com"
+git config user.name "Emulator000"
+git config user.email "emulator@hotmail.it"
 
-git remote add upstream "https://${GH_TOKEN}@github.com/telegram-rs/telegram-bot.git"
+git remote add upstream "https://${GH_TOKEN}@github.com/Emulator000/telegram-bot.git"
 git fetch upstream
 git reset upstream/gh-pages
 

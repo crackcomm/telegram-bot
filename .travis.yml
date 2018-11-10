@@ -5,10 +5,10 @@ rust:
   - nightly
 
 script:
-  - cargo build --verbose -p telegram-bot-raw
-  - cargo test --verbose -p telegram-bot-raw
-  - cargo build --verbose -p telegram-bot
-  - cargo test --verbose -p telegram-bot
+  - cargo build --verbose -p telegram-bot-fork-raw
+  - cargo test --verbose -p telegram-bot-fork-raw
+  - cargo build --verbose -p telegram-fork-bot
+  - cargo test --verbose -p telegram-fork-bot
 
 after_success:
   - |

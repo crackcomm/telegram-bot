@@ -1,12 +1,12 @@
 [package]
-name = "telegram-bot-raw"
-version = "0.6.2"
-authors = ["Lukas Kalbertodt <lukas.kalbertodt@gmail.com>", "Fedor Gogolev <knsd@knsd.net>"]
+name = "telegram-bot-fork-raw"
+version = "0.7.2"
+authors = ["Lukas Kalbertodt <lukas.kalbertodt@gmail.com>", "Fedor Gogolev <knsd@knsd.net>", "Emulator000 <emulator@hotmail.it>"]
 
 description = "Telegram Bot API types"
 
 documentation = "https://docs.rs/telegram-bot-raw/"
-repository = "https://github.com/telegram-rs/telegram-bot"
+repository = "https://github.com/Emulator000/telegram-bot"
 readme = "../README.md"
 
 keywords = ["telegram", "bot", "chat", "api"]
@@ -14,8 +14,8 @@ categories = ["api-bindings"]
 license = "MIT"
 
 [dependencies]
-serde = "1.0"
-serde_derive = "1.0"
-serde_json = "1.0"
-serde-value = "0.5.2"
-error-chain = "0.11.0"
+serde = "^1.0"
+serde_derive = "^1.0"
+serde_json = "^1.0"
+serde-value = "^0.5"
+error-chain = "^0.11"
