@@ -6,7 +6,7 @@ use futures::Future;
 use tokio;
 use tokio_timer;
 
-use telegram_bot_raw::{Request, ResponseType};
+use telegram_bot_fork_raw::{Request, ResponseType};
 
 use connector::{default_connector, Connector};
 use errors::Error;

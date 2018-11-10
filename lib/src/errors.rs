@@ -1,4 +1,4 @@
-use telegram_bot_raw;
+use telegram_bot_fork_raw;
 
 error_chain! {
     foreign_links {
@@ -9,6 +9,6 @@ error_chain! {
     }
 
     links {
-        Raw(telegram_bot_raw::Error, telegram_bot_raw::ErrorKind);
+        Raw(telegram_bot_fork_raw::Error, telegram_bot_fork_raw::ErrorKind);
     }
 }

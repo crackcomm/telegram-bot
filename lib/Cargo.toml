@@ -1,12 +1,12 @@
 [package]
-name = "telegram-bot"
-version = "0.7.0"
-authors = ["Lukas Kalbertodt <lukas.kalbertodt@gmail.com>", "Fedor Gogolev <knsd@knsd.net>"]
+name = "telegram-bot-fork"
+version = "0.7.1"
+authors = ["Lukas Kalbertodt <lukas.kalbertodt@gmail.com>", "Fedor Gogolev <knsd@knsd.net>", "Emulator000 <emulator@hotmail.it>"]
 
 description = "A library for creating Telegram bots"
 
 documentation = "https://docs.rs/telegram-bot/"
-repository = "https://github.com/telegram-rs/telegram-bot"
+repository = "https://github.com/Emulator000/telegram-bot"
 readme = "../README.md"
 
 keywords = ["telegram", "bot", "chat", "api"]
@@ -14,23 +14,23 @@ categories = ["api-bindings", "asynchronous"]
 license = "MIT"
 
 [dependencies]
-antidote = "1.0"
-tokio = "0.1"
-error-chain = "0.11.0"
-futures = "0.1"
+antidote = "^1.0"
+tokio = "^0.1"
+error-chain = "^0.11"
+futures = "^0.1"
 
-tokio-timer = "0.2.4"
+tokio-timer = "^0.2"
 
-http = "0.1.8"
+http = "^0.1"
 
-telegram-bot-raw = { version = "=0.7.0", path = "../raw" }
+telegram-bot-fork-raw = { version = "=0.7.1", path = "../raw" }
 
 [dependencies.hyper]
-version = "0.12"
+version = "^0.12"
 optional = true
 
 [dependencies.hyper-tls]
-version = "0.3"
+version = "^0.3"
 optional = true
 
 [features]

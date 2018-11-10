@@ -5,7 +5,7 @@ use std::time::Duration;
 use futures::{Async, Future, Poll, Stream};
 use tokio_timer;
 
-use telegram_bot_raw::{GetUpdates, AllowedUpdate, Update, Integer};
+use telegram_bot_fork_raw::{GetUpdates, AllowedUpdate, Update, Integer};
 
 use api::Api;
 use errors::Error;

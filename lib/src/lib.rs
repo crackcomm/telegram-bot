@@ -6,7 +6,7 @@ extern crate antidote;
 extern crate error_chain;
 extern crate futures;
 extern crate http;
-extern crate telegram_bot_raw;
+extern crate telegram_bot_fork_raw;
 extern crate tokio;
 extern crate tokio_timer;
 
