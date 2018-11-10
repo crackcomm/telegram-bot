@@ -1,13 +1,13 @@
 extern crate serde;
 extern crate serde_json;
 
-extern crate telegram_bot_raw;
+extern crate telegram_bot_fork_raw;
 
 use std::fs::File;
 use std::io::prelude::*;
 
-use telegram_bot_raw::types::message::MessageKind;
-use telegram_bot_raw::types::update::{Update, UpdateKind};
+use telegram_bot_fork_raw::types::message::MessageKind;
+use telegram_bot_fork_raw::types::update::{Update, UpdateKind};
 
 macro_rules! make_test {
     ($asset: ident, $test: expr) => {

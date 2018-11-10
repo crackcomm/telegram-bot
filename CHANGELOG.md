@@ -1,6 +1,27 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.7.2 - 2018-02-17
+
+### Fixes
+- README, docs and CI fixes
+
+## 0.7.1 - 2018-02-17
+
+### Fixes
+- README, docs and tests fixes
+
+## 0.7.0 - 2018-11-09
+
+### Features
+- Implemented the restrictChatMember method ([#96](https://github.com/telegram-rs/telegram-bot/pull/96))
+- SendDocument request implemented ([#105](https://github.com/telegram-rs/telegram-bot/pull/105))
+- Configurable getUpdates limit and language_code to User ([#108](https://github.com/telegram-rs/telegram-bot/pull/108))
+- Added missing fields for ChatMember ([#109](https://github.com/telegram-rs/telegram-bot/pull/109))
+- New version of tokio ([#110](https://github.com/telegram-rs/telegram-bot/pull/110))
+- User bot field ([#114](https://github.com/telegram-rs/telegram-bot/pull/114))
+- Added allowed_updates selection for getUpdates ([#116](https://github.com/telegram-rs/telegram-bot/pull/116))
+
 ## 0.6.1 - 2018-02-17
 
 ### Fixes
