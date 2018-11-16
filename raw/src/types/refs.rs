@@ -233,27 +233,27 @@ impl ToUserId for User {
 
 /// Unique user identifier.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct UserId(Integer);
+pub struct UserId(pub Integer);
 specific_chat_id_impls!(UserId, User);
 
 /// Unique group identifier.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct GroupId(Integer);
+pub struct GroupId(pub Integer);
 specific_chat_id_impls!(GroupId, Group);
 
 /// Unique supergroup identifier.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SupergroupId(Integer);
+pub struct SupergroupId(pub Integer);
 specific_chat_id_impls!(SupergroupId, Supergroup);
 
 /// Unique channel identifier.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ChannelId(Integer);
+pub struct ChannelId(pub Integer);
 specific_chat_id_impls!(ChannelId, Channel);
 
 /// Unique chat identifier.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ChatId(Integer);
+pub struct ChatId(pub Integer);
 chat_id_impls!(ChatId);
 
 /// Get `MessageId` from the type reference.
@@ -300,7 +300,7 @@ impl ToMessageId for MessageOrChannelPost {
 
 /// Unique message identifier inside a chat.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct MessageId(Integer);
+pub struct MessageId(pub Integer);
 integer_id_impls!(MessageId);
 
 /// Get `FileRef` from the type reference.
