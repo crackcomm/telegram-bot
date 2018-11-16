@@ -20,6 +20,7 @@ pub struct Api {
 }
 
 struct ApiInner {
+    url: Option<String>,
     token: String,
     connector: Box<Connector>,
 }
@@ -52,6 +53,7 @@ impl ConnectorConfig {
 /// Configuration for an `Api`.
 #[derive(Debug)]
 pub struct Config {
+    url: Option<String>,
     token: String,
     connector: ConnectorConfig,
 }
@@ -60,6 +62,7 @@ impl Config {
     /// Set connector type for an `Api`.
     pub fn connector(self, connector: Box<Connector>) -> Config {
         Config {
+            url: self.url,
             token: self.token,
             connector: ConnectorConfig::new(connector),
         }
@@ -69,6 +72,7 @@ impl Config {
     pub fn build(self) -> Result<Api, Error> {
         Ok(Api {
             inner: Rc::new(ApiInner {
+                url: self.url,
                 token: self.token,
                 connector: self.connector.take()?,
             }),
@@ -89,8 +93,9 @@ impl Api {
     /// use telegram_bot_fork::Api;
     ///
     /// # fn main() {
+    /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// let api = Api::configure(telegram_token).build().unwrap();
+    /// let api = Api::configure(telegram_url, telegram_token).build().unwrap();
     /// # }
     /// ```
     ///
@@ -105,8 +110,9 @@ impl Api {
     /// use telegram_bot_fork::Api;
     /// use telegram_bot_fork::connector::hyper;
     ///
+    /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// let api = Api::configure(telegram_token)
+    /// let api = Api::configure(telegram_url, telegram_token)
     ///     .connector(hyper::default_connector().unwrap())
     ///     .build().unwrap();
     /// # }
@@ -114,8 +120,9 @@ impl Api {
     /// # #[cfg(not(feature = "hyper_connector"))]
     /// # fn main() {}
     /// ```
-    pub fn configure<T: AsRef<str>>(token: T) -> Config {
+    pub fn configure<T: AsRef<str>>(url: Option<T>, token: T) -> Config {
         Config {
+            url: url.map(|url| url.as_ref().into()),
             token: token.as_ref().to_string(),
             connector: Default::default(),
         }
@@ -131,7 +138,7 @@ impl Api {
     /// # extern crate tokio;
     /// # use telegram_bot_fork::Api;
     /// # fn main() {
-    /// # let api: Api = Api::configure("token").build().unwrap();
+    /// # let api: Api = Api::configure(None, "token").build().unwrap();
     /// use futures::Stream;
     ///
     /// let future = api.stream().for_each(|update| {
@@ -157,8 +164,9 @@ impl Api {
     /// # use telegram_bot_fork::prelude::*;
     /// #
     /// # fn main() {
+    /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// # let api = Api::configure(telegram_token).build().unwrap();
+    /// # let api = Api::configure(telegram_url, telegram_token).build().unwrap();
     /// # if false {
     /// let chat = ChatId::new(61031);
     /// api.spawn(chat.text("Message"))
@@ -181,8 +189,9 @@ impl Api {
     /// # use telegram_bot_fork::{Api, GetMe};
     /// #
     /// # fn main() {
+    /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// # let api = Api::configure(telegram_token).build().unwrap();
+    /// # let api = Api::configure(telegram_url, telegram_token).build().unwrap();
     /// # if false {
     /// use std::time::Duration;
     ///
@@ -221,8 +230,9 @@ impl Api {
     /// # use telegram_bot_fork::{Api, GetMe};
     /// #
     /// # fn main() {
+    /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// # let api = Api::configure(telegram_token).build().unwrap();
+    /// # let api = Api::configure(telegram_url, telegram_token).build().unwrap();
     /// # if false {
     /// let future = api.send(GetMe);
     /// future.and_then(|me| Ok(println!("{:?}", me)));
@@ -239,8 +249,11 @@ impl Api {
 
         let api = self.clone();
         let response = request.and_then(move |request| {
+            let ref url = api.inner.url;
             let ref token = api.inner.token;
-            api.inner.connector.request(token, request)
+            api.inner
+                .connector
+                .request(url.as_ref().map(String::as_str), token, request)
         });
 
         let future = response

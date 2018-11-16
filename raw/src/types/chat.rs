@@ -113,37 +113,29 @@ impl<'de> Deserialize<'de> for Chat {
         }
 
         Ok(match raw.type_.as_ref() {
-            "private" => {
-                Chat::Private(User {
-                    id: raw.id.into(),
-                    username: raw.username,
-                    first_name: required_field!(first_name),
-                    last_name: raw.last_name,
-                    language_code: raw.language_code,
-                    is_bot: false,
-                })
-            }
-            "group" => {
-                Chat::Group(Group {
-                    id: raw.id.into(),
-                    title: required_field!(title),
-                    all_members_are_administrators: required_field!(all_members_are_administrators),
-                })
-            }
-            "supergroup" => {
-                Chat::Supergroup(Supergroup {
-                    id: raw.id.into(),
-                    title: required_field!(title),
-                    username: raw.username,
-                })
-            }
-            "channel" => {
-                Chat::Channel(Channel {
-                    id: raw.id.into(),
-                    title: required_field!(title),
-                    username: raw.username,
-                })
-            }
+            "private" => Chat::Private(User {
+                id: raw.id.into(),
+                username: raw.username,
+                first_name: required_field!(first_name),
+                last_name: raw.last_name,
+                language_code: raw.language_code,
+                is_bot: false,
+            }),
+            "group" => Chat::Group(Group {
+                id: raw.id.into(),
+                title: required_field!(title),
+                all_members_are_administrators: required_field!(all_members_are_administrators),
+            }),
+            "supergroup" => Chat::Supergroup(Supergroup {
+                id: raw.id.into(),
+                title: required_field!(title),
+                username: raw.username,
+            }),
+            "channel" => Chat::Channel(Channel {
+                id: raw.id.into(),
+                title: required_field!(title),
+                username: raw.username,
+            }),
             _ => Chat::Unknown(raw),
         })
     }

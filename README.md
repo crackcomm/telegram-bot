@@ -30,8 +30,7 @@ use futures::{Stream, future::lazy};
 use telegram_bot_fork::*;
 
 fn main() {
-    let mut runtime = tokio::runtime::current_thread::Runtime::new().unwrap();
-    runtime.block_on(lazy(|| {
+    tokio::runtime::current_thread::Runtime::new().unwrap().block_on(lazy(|| {
         let token = env::var("TELEGRAM_BOT_TOKEN").unwrap();
         let api = Api::configure(token).build().unwrap();
 
@@ -68,8 +67,6 @@ fn main() {
 
         Ok::<_, ()>(())
     })).unwrap();
-
-    runtime.run().unwrap();
 }
 ```
 You can find a bigger examples in the `examples`.

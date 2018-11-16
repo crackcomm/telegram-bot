@@ -6,7 +6,9 @@ pub use telegram_bot_fork_raw::CanAnswerCallbackQuery;
 pub use telegram_bot_fork_raw::CanLeaveChat;
 pub use telegram_bot_fork_raw::CanSendChatAction;
 pub use telegram_bot_fork_raw::{CanDeleteMessage, CanForwardMessage};
-pub use telegram_bot_fork_raw::{CanEditMessageCaption, CanEditMessageReplyMarkup, CanEditMessageText};
+pub use telegram_bot_fork_raw::{
+    CanEditMessageCaption, CanEditMessageReplyMarkup, CanEditMessageText,
+};
 pub use telegram_bot_fork_raw::{CanEditMessageLiveLocation, CanStopMessageLiveLocation};
 pub use telegram_bot_fork_raw::{CanGetChat, CanGetChatAdministrators, CanGetChatMembersCount};
 pub use telegram_bot_fork_raw::{CanGetChatMemberForChat, CanGetChatMemberForUser};

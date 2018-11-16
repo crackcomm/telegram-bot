@@ -9,11 +9,11 @@ use futures::{future::lazy, Stream};
 use telegram_bot_fork::*;
 
 fn main() {
-    let mut runtime = tokio::runtime::current_thread::Runtime::new().unwrap();
-    runtime
+    tokio::runtime::current_thread::Runtime::new()
+        .unwrap()
         .block_on(lazy(|| {
             let token = env::var("TELEGRAM_BOT_TOKEN").unwrap();
-            let api = Api::configure(token).build().unwrap();
+            let api = Api::configure(None, token).build().unwrap();
 
             let stream = api.stream().then(|mb_update| {
                 let res: Result<Result<Update, Error>, ()> = Ok(mb_update);
@@ -46,6 +46,4 @@ fn main() {
             Ok::<_, ()>(())
         }))
         .unwrap();
-
-    runtime.run().unwrap();
 }

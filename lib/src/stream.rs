@@ -5,7 +5,7 @@ use std::time::Duration;
 use futures::{Async, Future, Poll, Stream};
 use tokio_timer;
 
-use telegram_bot_fork_raw::{GetUpdates, AllowedUpdate, Update, Integer};
+use telegram_bot_fork_raw::{AllowedUpdate, GetUpdates, Integer, Update};
 
 use api::Api;
 use errors::Error;
@@ -69,12 +69,14 @@ impl Stream for UpdatesStream {
             Ok(false) => {
                 let timeout = self.timeout + Duration::from_secs(1);
 
-                let request = self.api.send_timeout(GetUpdates::new()
-                    .offset(self.last_update + 1)
-                    .timeout(self.timeout.as_secs() as Integer)
-                    .allowed_updates(&self.allowed_updates)
-                    .limit(self.limit)
-                , timeout);
+                let request = self.api.send_timeout(
+                    GetUpdates::new()
+                        .offset(self.last_update + 1)
+                        .timeout(self.timeout.as_secs() as Integer)
+                        .allowed_updates(&self.allowed_updates)
+                        .limit(self.limit),
+                    timeout,
+                );
 
                 self.current_request = Some(request);
                 self.poll()
@@ -101,7 +103,7 @@ impl NewUpdatesStream for UpdatesStream {
             timeout: Duration::from_secs(TELEGRAM_LONG_POLL_TIMEOUT_SECONDS),
             allowed_updates: Vec::new(),
             limit: TELEGRAM_LONG_POLL_LIMIT_MESSAGES,
-            error_delay: Duration::from_millis(TELEGRAM_LONG_POLL_ERROR_DELAY_MILLISECONDS)
+            error_delay: Duration::from_millis(TELEGRAM_LONG_POLL_ERROR_DELAY_MILLISECONDS),
         }
     }
 }

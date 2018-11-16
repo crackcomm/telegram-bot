@@ -13,7 +13,9 @@ use hyper::{Body, Request};
 use hyper::{Method, Uri};
 use hyper_tls::HttpsConnector;
 
-use telegram_bot_fork_raw::{Body as TelegramBody, HttpRequest, HttpResponse, Method as TelegramMethod};
+use telegram_bot_fork_raw::{
+    Body as TelegramBody, HttpRequest, HttpResponse, Method as TelegramMethod,
+};
 
 use errors::Error;
 use future::{NewTelegramFuture, TelegramFuture};
@@ -40,8 +42,13 @@ impl<C> HyperConnector<C> {
 }
 
 impl<C: Connect + 'static> Connector for HyperConnector<C> {
-    fn request(&self, token: &str, req: HttpRequest) -> TelegramFuture<HttpResponse> {
-        let uri = result(Uri::from_str(&req.url.url(token))).map_err(From::from);
+    fn request(
+        &self,
+        url: Option<&str>,
+        token: &str,
+        req: HttpRequest,
+    ) -> TelegramFuture<HttpResponse> {
+        let uri = result(Uri::from_str(&req.url.url(url, token))).map_err(From::from);
 
         let client = self.inner.clone();
         let request = uri.and_then(move |uri| {

@@ -9,11 +9,11 @@ use futures::{future::lazy, Future};
 use telegram_bot_fork::*;
 
 fn main() {
-    let mut runtime = tokio::runtime::current_thread::Runtime::new().unwrap();
-    runtime
+    tokio::runtime::current_thread::Runtime::new()
+        .unwrap()
         .block_on(lazy(|| {
             let token = env::var("TELEGRAM_BOT_TOKEN").unwrap();
-            let api = Api::configure(token).build().unwrap();
+            let api = Api::configure(None, token).build().unwrap();
 
             tokio::executor::current_thread::spawn(api.send(GetMe).then(|r| {
                 println!("{:?}", r);
@@ -24,6 +24,4 @@ fn main() {
             Ok::<_, Error>(())
         }))
         .unwrap();
-
-    runtime.run().unwrap();
 }

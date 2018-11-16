@@ -10,9 +10,11 @@ impl RequestUrl {
         RequestUrl::Method(method)
     }
 
-    pub fn url(&self, token: &str) -> String {
+    pub fn url(&self, url: Option<&str>, token: &str) -> String {
         match self {
-            &RequestUrl::Method(method) => format!("{}bot{}/{}", TELEGRAM_URL, token, method),
+            &RequestUrl::Method(method) => {
+                format!("{}bot{}/{}", url.unwrap_or(TELEGRAM_URL), token, method)
+            }
         }
     }
 }

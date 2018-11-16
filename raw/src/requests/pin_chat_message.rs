@@ -26,7 +26,11 @@ impl Request for PinChatMessage {
 }
 
 impl PinChatMessage {
-    pub fn new<C, M>(chat: C, message: M) -> Self where C: ToChatRef, M: ToMessageId {
+    pub fn new<C, M>(chat: C, message: M) -> Self
+    where
+        C: ToChatRef,
+        M: ToMessageId,
+    {
         Self {
             chat_id: chat.to_chat_ref(),
             message_id: message.to_message_id(),
