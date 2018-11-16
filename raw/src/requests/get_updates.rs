@@ -54,7 +54,7 @@ impl GetUpdates {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
+#[derive(Debug, Clone, PartialEq, PartialOrd, Deserialize, Serialize)]
 pub enum AllowedUpdate {
     #[serde(rename = "message")]
     Message,
