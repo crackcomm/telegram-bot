@@ -41,7 +41,7 @@ impl Api {
     /// # fn main() {
     /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// let api = Api::new(telegram_url, telegram_token);
+    /// let api = Api::new(telegram_url, telegram_token).unwrap();
     /// # }
     /// ```
     ///
