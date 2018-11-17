@@ -8,7 +8,9 @@ use tokio_timer;
 
 use telegram_bot_fork_raw::{Request, ResponseType};
 
-use connector::{default_connector, Connector};
+#[cfg(feature = "hyper_connector")]
+use connector::default_connector;
+use connector::Connector;
 use errors::Error;
 use future::{NewTelegramFuture, TelegramFuture};
 use stream::{NewUpdatesStream, UpdatesStream};
@@ -27,10 +29,12 @@ struct ApiInner {
 
 #[derive(Debug)]
 pub enum ConnectorConfig {
+    #[cfg(feature = "hyper_connector")]
     Default,
     Specified(Box<Connector>),
 }
 
+#[cfg(feature = "hyper_connector")]
 impl Default for ConnectorConfig {
     fn default() -> Self {
         ConnectorConfig::Default
@@ -44,6 +48,7 @@ impl ConnectorConfig {
 
     pub fn take(self) -> Result<Box<Connector>, Error> {
         match self {
+            #[cfg(feature = "hyper_connector")]
             ConnectorConfig::Default => default_connector(),
             ConnectorConfig::Specified(connector) => Ok(connector),
         }
@@ -120,11 +125,11 @@ impl Api {
     /// # #[cfg(not(feature = "hyper_connector"))]
     /// # fn main() {}
     /// ```
-    pub fn configure<T: AsRef<str>>(url: Option<T>, token: T) -> Config {
+    pub fn configure<T: AsRef<str>>(url: Option<T>, token: T, connector: ConnectorConfig) -> Config {
         Config {
             url: url.map(|url| url.as_ref().into()),
             token: token.as_ref().to_string(),
-            connector: Default::default(),
+            connector,
         }
     }
 
