@@ -8,8 +8,9 @@ use tokio_timer;
 
 use telegram_bot_fork_raw::{Request, ResponseType};
 
-use connector::{default_connector, Connector};
-use errors::Error;
+#[cfg(feature = "hyper_connector")]
+use {connector::default_connector, errors::Error};
+use connector::Connector;
 use future::{NewTelegramFuture, TelegramFuture};
 use stream::{NewUpdatesStream, UpdatesStream};
 
@@ -63,6 +64,7 @@ impl Api {
     /// # #[cfg(not(feature = "hyper_connector"))]
     /// # fn main() {}
     /// ```
+    #[cfg(feature = "hyper_connector")]
     pub fn new<T: AsRef<str>>(url: Option<T>, token: T) -> Result<Api, Error> {
         Ok(Self::with_connector(url, token, default_connector()?))
     }

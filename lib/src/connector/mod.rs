@@ -13,7 +13,7 @@ use errors::Error;
 /// Returns default connector.
 ///
 /// See module level documentation for details.
-#[cfg(all(all(feature = "hyper_connector")))]
+#[cfg(feature = "hyper_connector")]
 pub fn default_connector() -> Result<Box<Connector>, Error> {
     hyper::default_connector()
 }
