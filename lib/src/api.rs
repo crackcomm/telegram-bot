@@ -91,7 +91,7 @@ impl Api {
     /// # extern crate tokio;
     /// # use telegram_bot_fork::Api;
     /// # fn main() {
-    /// # let api: Api = Api::configure(None, "token").build().unwrap();
+    /// # let api: Api = Api::new(None, "token").unwrap();
     /// use futures::Stream;
     ///
     /// let future = api.stream().for_each(|update| {
@@ -119,7 +119,7 @@ impl Api {
     /// # fn main() {
     /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// # let api = Api::configure(telegram_url, telegram_token).build().unwrap();
+    /// # let api = Api::new(telegram_url, telegram_token).unwrap();
     /// # if false {
     /// let chat = ChatId::new(61031);
     /// api.spawn(chat.text("Message"))
@@ -144,7 +144,7 @@ impl Api {
     /// # fn main() {
     /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// # let api = Api::configure(telegram_url, telegram_token).build().unwrap();
+    /// # let api = Api::new(telegram_url, telegram_token).unwrap();
     /// # if false {
     /// use std::time::Duration;
     ///
@@ -185,7 +185,7 @@ impl Api {
     /// # fn main() {
     /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// # let api = Api::configure(telegram_url, telegram_token).build().unwrap();
+    /// # let api = Api::new(telegram_url, telegram_token).unwrap();
     /// # if false {
     /// let future = api.send(GetMe);
     /// future.and_then(|me| Ok(println!("{:?}", me)));
