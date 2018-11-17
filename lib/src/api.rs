@@ -8,10 +8,7 @@ use tokio_timer;
 
 use telegram_bot_fork_raw::{Request, ResponseType};
 
-#[cfg(feature = "hyper_connector")]
-use connector::default_connector;
 use connector::Connector;
-use errors::Error;
 use future::{NewTelegramFuture, TelegramFuture};
 use stream::{NewUpdatesStream, UpdatesStream};
 
@@ -25,64 +22,6 @@ struct ApiInner {
     url: Option<String>,
     token: String,
     connector: Box<Connector>,
-}
-
-#[derive(Debug)]
-pub enum ConnectorConfig {
-    #[cfg(feature = "hyper_connector")]
-    Default,
-    Specified(Box<Connector>),
-}
-
-#[cfg(feature = "hyper_connector")]
-impl Default for ConnectorConfig {
-    fn default() -> Self {
-        ConnectorConfig::Default
-    }
-}
-
-impl ConnectorConfig {
-    pub fn new(connector: Box<Connector>) -> Self {
-        ConnectorConfig::Specified(connector)
-    }
-
-    pub fn take(self) -> Result<Box<Connector>, Error> {
-        match self {
-            #[cfg(feature = "hyper_connector")]
-            ConnectorConfig::Default => default_connector(),
-            ConnectorConfig::Specified(connector) => Ok(connector),
-        }
-    }
-}
-
-/// Configuration for an `Api`.
-#[derive(Debug)]
-pub struct Config {
-    url: Option<String>,
-    token: String,
-    connector: ConnectorConfig,
-}
-
-impl Config {
-    /// Set connector type for an `Api`.
-    pub fn connector(self, connector: Box<Connector>) -> Config {
-        Config {
-            url: self.url,
-            token: self.token,
-            connector: ConnectorConfig::new(connector),
-        }
-    }
-
-    /// Create new `Api` instance.
-    pub fn build(self) -> Result<Api, Error> {
-        Ok(Api {
-            inner: Rc::new(ApiInner {
-                url: self.url,
-                token: self.token,
-                connector: self.connector.take()?,
-            }),
-        })
-    }
 }
 
 impl Api {
@@ -100,7 +39,7 @@ impl Api {
     /// # fn main() {
     /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// let api = Api::configure(telegram_url, telegram_token).build().unwrap();
+    /// let api = Api::new(telegram_url, telegram_token, Default::default());
     /// # }
     /// ```
     ///
@@ -117,19 +56,19 @@ impl Api {
     ///
     /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// let api = Api::configure(telegram_url, telegram_token)
-    ///     .connector(hyper::default_connector().unwrap())
-    ///     .build().unwrap();
+    /// let api = Api::new(telegram_url, telegram_token, hyper::default_connector().unwrap());
     /// # }
     ///
     /// # #[cfg(not(feature = "hyper_connector"))]
     /// # fn main() {}
     /// ```
-    pub fn configure<T: AsRef<str>>(url: Option<T>, token: T, connector: ConnectorConfig) -> Config {
-        Config {
-            url: url.map(|url| url.as_ref().into()),
-            token: token.as_ref().to_string(),
-            connector,
+    pub fn new<T: AsRef<str>>(url: Option<T>, token: T, connector: Box<Connector>) -> Api {
+        Api {
+            inner: Rc::new(ApiInner {
+                url: url.map(|url| url.as_ref().into()),
+                token: token.as_ref().to_string(),
+                connector,
+            }),
         }
     }
 
