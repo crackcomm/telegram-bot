@@ -8,7 +8,8 @@ use tokio_timer;
 
 use telegram_bot_fork_raw::{Request, ResponseType};
 
-use connector::Connector;
+use connector::{default_connector, Connector};
+use errors::Error;
 use future::{NewTelegramFuture, TelegramFuture};
 use stream::{NewUpdatesStream, UpdatesStream};
 
@@ -39,7 +40,7 @@ impl Api {
     /// # fn main() {
     /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// let api = Api::new(telegram_url, telegram_token, Default::default());
+    /// let api = Api::new(telegram_url, telegram_token);
     /// # }
     /// ```
     ///
@@ -56,13 +57,21 @@ impl Api {
     ///
     /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// let api = Api::new(telegram_url, telegram_token, hyper::default_connector().unwrap());
+    /// let api = Api::with_connector(telegram_url, telegram_token, hyper::default_connector().unwrap());
     /// # }
     ///
     /// # #[cfg(not(feature = "hyper_connector"))]
     /// # fn main() {}
     /// ```
-    pub fn new<T: AsRef<str>>(url: Option<T>, token: T, connector: Box<Connector>) -> Api {
+    pub fn new<T: AsRef<str>>(url: Option<T>, token: T) -> Result<Api, Error> {
+        Ok(Self::with_connector(url, token, default_connector()?))
+    }
+
+    pub fn with_connector<T: AsRef<str>>(
+        url: Option<T>,
+        token: T,
+        connector: Box<Connector>,
+    ) -> Api {
         Api {
             inner: Rc::new(ApiInner {
                 url: url.map(|url| url.as_ref().into()),
