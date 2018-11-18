@@ -44,7 +44,7 @@ fn main() {
                 res
             });
 
-            tokio::executor::current_thread::spawn(stream.for_each(move |update| {
+            stream.for_each(move |update| {
                 match update {
                     Ok(update) => {
                         if let UpdateKind::Message(message) = update.kind {
@@ -60,9 +60,7 @@ fn main() {
                 }
 
                 Ok(())
-            }));
-
-            Ok::<_, ()>(())
+            })
         }))
         .unwrap();
 }

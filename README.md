@@ -41,31 +41,28 @@ fn main() {
         });
 
         // Print update or error for each update.
-        tokio::executor::current_thread::spawn(
-            stream.for_each(move |update| {
-                match update {
-                    Ok(update) => {
-                        // If the received update contains a new message...
-                        if let UpdateKind::Message(message) = update.kind {
-                            if let MessageKind::Text { ref data, .. } = message.kind {
-                                // Print received text message to stdout.
-                                println!("<{}>: {}", &message.from.first_name, data);
+        stream.for_each(move |update| {
+            match update {
+                Ok(update) => {
+                    // If the received update contains a new message...
+                    if let UpdateKind::Message(message) = update.kind {
+                        if let MessageKind::Text { ref data, .. } = message.kind {
+                            // Print received text message to stdout.
+                            println!("<{}>: {}", &message.from.first_name, data);
 
-                                // Answer message with "Hi".
-                                api.spawn(message.text_reply(
-                                    format!("Hi, {}! You just wrote '{}'", &message.from.first_name, data)
-                                ));
-                            }
+                            // Answer message with "Hi".
+                            api.spawn(message.text_reply(format!(
+                                "Hi, {}! You just wrote '{}'",
+                                &message.from.first_name, data
+                            )));
                         }
                     }
-                    Err(_) => {}
                 }
+                Err(_) => {}
+            }
 
-                Ok(())
-            })
-        );
-
-        Ok::<_, ()>(())
+            Ok(())
+        })
     })).unwrap();
 }
 ```

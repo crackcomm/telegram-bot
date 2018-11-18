@@ -22,13 +22,11 @@ fn main() {
             });
 
             // Print update or error for each update.
-            tokio::executor::current_thread::spawn(stream.for_each(|mb_update| {
+            stream.for_each(|mb_update| {
                 println!("{:?}", mb_update);
 
                 Ok(())
-            }));
-
-            Ok::<_, ()>(())
+            })
         }))
         .unwrap();
 }

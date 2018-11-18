@@ -20,7 +20,8 @@ fn main() {
                 res
             });
 
-            tokio::executor::current_thread::spawn(stream.for_each(move |update| {
+            // Print update or error for each update.
+            stream.for_each(move |update| {
                 match update {
                     Ok(update) => {
                         // If the received update contains a new message...
@@ -41,9 +42,7 @@ fn main() {
                 }
 
                 Ok(())
-            }));
-
-            Ok::<_, ()>(())
+            })
         }))
         .unwrap();
 }
