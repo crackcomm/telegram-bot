@@ -32,7 +32,7 @@ use telegram_bot_fork::*;
 fn main() {
     tokio::runtime::current_thread::Runtime::new().unwrap().block_on(lazy(|| {
         let token = env::var("TELEGRAM_BOT_TOKEN").unwrap();
-        let api = Api::configure(token).build().unwrap();
+        let api = Api::new(None, token).unwrap();
 
         // Convert stream to the stream with errors in result
         let stream = api.stream().then(|mb_update| {

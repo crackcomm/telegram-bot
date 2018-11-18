@@ -1,6 +1,6 @@
 [package]
 name = "telegram-bot-fork"
-version = "0.7.4"
+version = "0.7.5"
 authors = ["Lukas Kalbertodt <lukas.kalbertodt@gmail.com>", "Fedor Gogolev <knsd@knsd.net>", "Emulator000 <emulator@hotmail.it>"]
 
 description = "A library for creating Telegram bots"
@@ -23,7 +23,7 @@ tokio-timer = "^0.2"
 
 http = "^0.1"
 
-telegram-bot-fork-raw = { version = "=0.7.4", path = "../raw" }
+telegram-bot-fork-raw = { version = "=0.7.5", path = "../raw" }
 
 [dependencies.hyper]
 version = "^0.12"
