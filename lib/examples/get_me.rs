@@ -13,7 +13,7 @@ fn main() {
         .unwrap()
         .block_on(lazy(|| {
             let token = env::var("TELEGRAM_BOT_TOKEN").unwrap();
-            let api = Api::configure(None, token).build().unwrap();
+            let api = Api::new(None, token).unwrap();
 
             tokio::executor::current_thread::spawn(api.send(GetMe).then(|r| {
                 println!("{:?}", r);

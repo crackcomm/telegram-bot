@@ -26,7 +26,7 @@ fn main() {
         .unwrap()
         .block_on(lazy(|| {
             let token = env::var("TELEGRAM_BOT_TOKEN").unwrap();
-            let api = Api::configure(None, token).build().unwrap();
+            let api = Api::new(None, token).unwrap();
 
             let stream = api.stream().then(|mb_update| {
                 let res: Result<Result<Update, Error>, ()> = Ok(mb_update);
