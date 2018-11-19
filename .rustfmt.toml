@@ -1,0 +1,9 @@
+unstable_features = true
+merge_imports = true
+normalize_doc_attributes = true
+use_try_shorthand = true
+use_field_init_shorthand = true
+format_strings = true
+format_macro_matchers = true
+format_macro_bodies = true
+format_doc_comments = true

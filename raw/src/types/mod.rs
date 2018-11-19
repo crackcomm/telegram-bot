@@ -10,12 +10,7 @@ pub mod reply_markup;
 pub mod response_parameters;
 pub mod update;
 
-pub use self::callback_query::*;
-pub use self::chat::*;
-pub use self::chat_member::*;
-pub use self::message::*;
-pub use self::primitive::*;
-pub use self::refs::*;
-pub use self::reply_markup::*;
-pub use self::response_parameters::*;
-pub use self::update::*;
+pub use self::{
+    callback_query::*, chat::*, chat_member::*, message::*, primitive::*, refs::*, reply_markup::*,
+    response_parameters::*, update::*,
+};

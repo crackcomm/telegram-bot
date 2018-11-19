@@ -5,7 +5,7 @@ use serde::ser::{Serialize, Serializer};
 use types::*;
 
 macro_rules! integer_id_impls {
-    ($name: ident) => {
+    ($name:ident) => {
         impl $name {
             pub fn new(inner: Integer) -> Self {
                 $name(inner)
@@ -80,9 +80,9 @@ impl ToSourceChat for ChannelPost {
 
 impl ToSourceChat for MessageOrChannelPost {
     fn to_source_chat(&self) -> ChatId {
-        match self {
-            &MessageOrChannelPost::Message(ref message) => message.to_source_chat(),
-            &MessageOrChannelPost::ChannelPost(ref channel_post) => channel_post.to_source_chat(),
+        match *self {
+            MessageOrChannelPost::Message(ref message) => message.to_source_chat(),
+            MessageOrChannelPost::ChannelPost(ref channel_post) => channel_post.to_source_chat(),
         }
     }
 }
@@ -169,7 +169,7 @@ impl Serialize for ChatRef {
 }
 
 macro_rules! chat_id_impls {
-    ($id: ident) => {
+    ($id:ident) => {
         integer_id_impls!($id);
 
         impl ToChatRef for $id {
@@ -181,7 +181,7 @@ macro_rules! chat_id_impls {
 }
 
 macro_rules! specific_chat_id_impls {
-    ($id: ident, $typ: ident) => {
+    ($id:ident, $typ:ident) => {
         chat_id_impls!($id);
 
         impl From<$id> for ChatId {
@@ -291,9 +291,9 @@ impl ToMessageId for ChannelPost {
 
 impl ToMessageId for MessageOrChannelPost {
     fn to_message_id(&self) -> MessageId {
-        match self {
-            &MessageOrChannelPost::Message(ref message) => message.to_message_id(),
-            &MessageOrChannelPost::ChannelPost(ref channel_post) => channel_post.to_message_id(),
+        match *self {
+            MessageOrChannelPost::Message(ref message) => message.to_message_id(),
+            MessageOrChannelPost::ChannelPost(ref channel_post) => channel_post.to_message_id(),
         }
     }
 }
@@ -319,7 +319,7 @@ where
 }
 
 macro_rules! file_id_impls {
-    ($name: ident) => {
+    ($name:ident) => {
         impl ToFileRef for $name {
             fn to_file_ref(&self) -> FileRef {
                 self.file_id.clone().into()

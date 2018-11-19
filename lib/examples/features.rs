@@ -3,9 +3,11 @@ extern crate telegram_bot_fork;
 extern crate tokio;
 extern crate tokio_timer;
 
-use std::env;
-use std::ops::Add;
-use std::time::{Duration, Instant};
+use std::{
+    env,
+    ops::Add,
+    time::{Duration, Instant},
+};
 
 use futures::{future::lazy, Future, Stream};
 
@@ -75,7 +77,7 @@ fn test_edit_message(api: Api, message: Message) {
 
     let duration_1 = Duration::from_secs(2);
 
-    let sleep_1 = Delay::new(Instant::now().add(duration_1)).map_err(From::from);
+    let sleep_1 = Delay::new(Instant::now().add(duration_1)).from_err();
 
     let round_2_api = api.clone();
     let round_2 = round_1
@@ -83,7 +85,7 @@ fn test_edit_message(api: Api, message: Message) {
         .and_then(move |(message, _)| round_2_api.send(message.edit_text("Round 2")));
 
     let duration_2 = Duration::from_secs(4);
-    let sleep_2 = Delay::new(Instant::now().add(duration_2)).map_err(From::from);
+    let sleep_2 = Delay::new(Instant::now().add(duration_2)).from_err();
 
     let round_3 = round_2
         .join(sleep_2)

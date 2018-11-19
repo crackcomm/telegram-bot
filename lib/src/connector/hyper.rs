@@ -1,16 +1,13 @@
 //! Connector with hyper backend.
 
-use std::fmt;
-use std::rc::Rc;
-use std::str::FromStr;
+use std::{fmt, rc::Rc, str::FromStr};
 
-use futures::future::result;
-use futures::{Future, Stream};
-use hyper;
-use hyper::client::connect::Connect;
-use hyper::client::Client;
-use hyper::{Body, Request};
-use hyper::{Method, Uri};
+use futures::{future::result, Future, Stream};
+use hyper::{
+    self,
+    client::{connect::Connect, Client},
+    Body, Method, Request, Uri,
+};
 use hyper_tls::HttpsConnector;
 
 use telegram_bot_fork_raw::{
@@ -48,7 +45,7 @@ impl<C: Connect + 'static> Connector for HyperConnector<C> {
         token: &str,
         req: HttpRequest,
     ) -> TelegramFuture<HttpResponse> {
-        let uri = result(Uri::from_str(&req.url.url(url, token))).map_err(From::from);
+        let uri = result(Uri::from_str(&req.url.url(url, token))).from_err();
 
         let client = self.inner.clone();
         let request = uri.and_then(move |uri| {
@@ -72,11 +69,11 @@ impl<C: Connect + 'static> Connector for HyperConnector<C> {
                 body => panic!("Unknown body type {:?}", body),
             };
 
-            client.request(http_request).map_err(From::from)
+            client.request(http_request).from_err()
         });
 
         let future = request.and_then(move |response| {
-            response.into_body().map_err(From::from).fold(
+            response.into_body().from_err().fold(
                 vec![],
                 |mut result, chunk| -> Result<Vec<u8>, Error> {
                     result.extend_from_slice(&chunk);

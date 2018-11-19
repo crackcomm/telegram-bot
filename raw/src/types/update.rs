@@ -131,7 +131,7 @@ impl<'de> Deserialize<'de> for Update {
             }
         }
 
-        const FIELDS: &'static [&'static str] = &[
+        const FIELDS: &[&str] = &[
             "update_id",
             "message",
             "edited_message",

@@ -1,18 +1,16 @@
-use std::rc::Rc;
-use std::time::Duration;
+use std::{rc::Rc, time::Duration};
 
-use futures::future::result;
-use futures::Future;
+use futures::{future::result, Future};
 use tokio;
 use tokio_timer;
 
 use telegram_bot_fork_raw::{Request, ResponseType};
 
-#[cfg(feature = "hyper_connector")]
-use {connector::default_connector, errors::Error};
 use connector::Connector;
 use future::{NewTelegramFuture, TelegramFuture};
 use stream::{NewUpdatesStream, UpdatesStream};
+#[cfg(feature = "hyper_connector")]
+use {connector::default_connector, errors::Error};
 
 /// Main type for sending requests to the Telegram bot API.
 #[derive(Clone)]
@@ -53,12 +51,15 @@ impl Api {
     /// # extern crate tokio;
     /// # #[cfg(feature = "hyper_connector")]
     /// # fn main() {
-    /// use telegram_bot_fork::Api;
-    /// use telegram_bot_fork::connector::hyper;
+    /// use telegram_bot_fork::{connector::hyper, Api};
     ///
     /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// let api = Api::with_connector(telegram_url, telegram_token, hyper::default_connector().unwrap());
+    /// let api = Api::with_connector(
+    ///     telegram_url,
+    ///     telegram_token,
+    ///     hyper::default_connector().unwrap(),
+    /// );
     /// # }
     ///
     /// # #[cfg(not(feature = "hyper_connector"))]
@@ -160,10 +161,8 @@ impl Api {
         request: Req,
         duration: Duration,
     ) -> TelegramFuture<Option<<Req::Response as ResponseType>::Type>> {
-        let timeout_future = tokio_timer::sleep(duration)
-            .map_err(From::from)
-            .map(|()| None);
-        let send_future = self.send(request).map(|resp| Some(resp));
+        let timeout_future = tokio_timer::sleep(duration).from_err().map(|()| None);
+        let send_future = self.send(request).map(Some);
 
         let future = timeout_future
             .select(send_future)
@@ -204,8 +203,8 @@ impl Api {
 
         let api = self.clone();
         let response = request.and_then(move |request| {
-            let ref url = api.inner.url;
-            let ref token = api.inner.token;
+            let url = &api.inner.url;
+            let token = &api.inner.token;
             api.inner
                 .connector
                 .request(url.as_ref().map(String::as_str), token, request)

@@ -1,5 +1,4 @@
-use std::borrow::Cow;
-use std::ops::Not;
+use std::{borrow::Cow, ops::Not};
 
 use requests::*;
 use types::*;
@@ -41,8 +40,8 @@ impl<'t, 'a, 'f> SendVenue<'t, 'a, 'f> {
     {
         SendVenue {
             chat_id: chat.to_chat_ref(),
-            latitude: latitude,
-            longitude: longitude,
+            latitude,
+            longitude,
             title: title.into(),
             address: address.into(),
             disable_notification: false,

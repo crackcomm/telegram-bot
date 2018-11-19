@@ -1,6 +1,4 @@
-use std::cmp::max;
-use std::collections::VecDeque;
-use std::time::Duration;
+use std::{cmp::max, collections::VecDeque, time::Duration};
 
 use futures::{Async, Future, Poll, Stream};
 use tokio_timer;
@@ -39,12 +37,9 @@ impl Stream for UpdatesStream {
         }
 
         let result = match self.current_request {
-            None => Ok(false),
             Some(ref mut current_request) => {
                 let polled_update = current_request.poll();
                 match polled_update {
-                    Ok(Async::NotReady) => return Ok(Async::NotReady),
-                    Ok(Async::Ready(None)) => Ok(false),
                     Ok(Async::Ready(Some(updates))) => {
                         for update in updates {
                             self.last_update = max(update.id, self.last_update);
@@ -52,19 +47,18 @@ impl Stream for UpdatesStream {
                         }
                         Ok(true)
                     }
+                    Ok(Async::Ready(None)) => Ok(false),
+                    Ok(Async::NotReady) => return Ok(Async::NotReady),
                     Err(err) => Err(err),
                 }
             }
+            None => Ok(false),
         };
 
         match result {
-            Err(err) => {
-                let timeout_future = tokio_timer::sleep(self.error_delay)
-                    .map_err(From::from)
-                    .map(|()| None);
-
-                self.current_request = Some(TelegramFuture::new(Box::new(timeout_future)));
-                return Err(err);
+            Ok(true) => {
+                self.current_request = None;
+                self.poll()
             }
             Ok(false) => {
                 let timeout = self.timeout + Duration::from_secs(1);
@@ -81,9 +75,13 @@ impl Stream for UpdatesStream {
                 self.current_request = Some(request);
                 self.poll()
             }
-            Ok(true) => {
-                self.current_request = None;
-                self.poll()
+            Err(err) => {
+                let timeout_future = tokio_timer::sleep(self.error_delay)
+                    .from_err()
+                    .map(|()| None);
+
+                self.current_request = Some(TelegramFuture::new(Box::new(timeout_future)));
+                Err(err)
             }
         }
     }
@@ -96,7 +94,7 @@ pub trait NewUpdatesStream {
 impl NewUpdatesStream for UpdatesStream {
     fn new(api: Api) -> Self {
         UpdatesStream {
-            api: api,
+            api,
             last_update: 0,
             buffer: VecDeque::new(),
             current_request: None,
