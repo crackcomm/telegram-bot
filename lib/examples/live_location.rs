@@ -3,9 +3,11 @@ extern crate telegram_bot_fork;
 extern crate tokio;
 extern crate tokio_timer;
 
-use std::env;
-use std::ops::Add;
-use std::time::{Duration, Instant};
+use std::{
+    env,
+    ops::Add,
+    time::{Duration, Instant},
+};
 
 use futures::{future::lazy, Future, Stream};
 
@@ -14,7 +16,7 @@ use tokio_timer::Delay;
 use telegram_bot_fork::*;
 
 fn test(api: Api, message: Message) {
-    let timeout = |n| Delay::new(Instant::now().add(Duration::from_secs(n))).map_err(From::from);
+    let timeout = |n| Delay::new(Instant::now().add(Duration::from_secs(n))).from_err();
     let api_future = || Ok(api.clone());
 
     let future = api
@@ -37,7 +39,7 @@ fn main() {
         .unwrap()
         .block_on(lazy(|| {
             let token = env::var("TELEGRAM_BOT_TOKEN").unwrap();
-            let api = Api::new(None, token).unwrap();
+            let api = Api::new(token).unwrap();
 
             let stream = api.stream().then(|mb_update| {
                 let res: Result<Result<Update, Error>, ()> = Ok(mb_update);

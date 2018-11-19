@@ -28,32 +28,12 @@ pub mod stop_message_live_location;
 pub mod unban_chat_member;
 pub mod unpin_chat_message;
 
-pub use self::_base::*;
-pub use self::answer_callback_query::*;
-pub use self::delete_message::*;
-pub use self::edit_message_caption::*;
-pub use self::edit_message_live_location::*;
-pub use self::edit_message_reply_markup::*;
-pub use self::edit_message_text::*;
-pub use self::forward_message::*;
-pub use self::get_chat::*;
-pub use self::get_chat_administrators::*;
-pub use self::get_chat_member::*;
-pub use self::get_chat_members_count::*;
-pub use self::get_file::*;
-pub use self::get_me::*;
-pub use self::get_updates::*;
-pub use self::get_user_profile_photos::*;
-pub use self::kick_chat_member::*;
-pub use self::leave_chat::*;
-pub use self::pin_chat_message::*;
-pub use self::restrict_chat_member::*;
-pub use self::send_audio::*;
-pub use self::send_chat_action::*;
-pub use self::send_contact::*;
-pub use self::send_location::*;
-pub use self::send_message::*;
-pub use self::send_venue::*;
-pub use self::stop_message_live_location::*;
-pub use self::unban_chat_member::*;
-pub use self::unpin_chat_message::*;
+pub use self::{
+    _base::*, answer_callback_query::*, delete_message::*, edit_message_caption::*,
+    edit_message_live_location::*, edit_message_reply_markup::*, edit_message_text::*,
+    forward_message::*, get_chat::*, get_chat_administrators::*, get_chat_member::*,
+    get_chat_members_count::*, get_file::*, get_me::*, get_updates::*, get_user_profile_photos::*,
+    kick_chat_member::*, leave_chat::*, pin_chat_message::*, restrict_chat_member::*,
+    send_audio::*, send_chat_action::*, send_contact::*, send_location::*, send_message::*,
+    send_venue::*, stop_message_live_location::*, unban_chat_member::*, unpin_chat_message::*,
+};

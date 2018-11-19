@@ -13,7 +13,7 @@ fn main() {
         .unwrap()
         .block_on(lazy(|| {
             let token = env::var("TELEGRAM_BOT_TOKEN").unwrap();
-            let api = Api::new(None, token).unwrap();
+            let api = Api::new(token).unwrap();
 
             // Convert stream to the stream with errors in result
             let stream = api.stream().then(|mb_update| {

@@ -1,27 +1,25 @@
-use std::rc::Rc;
-use std::time::Duration;
+use std::{rc::Rc, time::Duration};
 
-use futures::future::result;
-use futures::Future;
+use futures::{future::result, Future};
 use tokio;
 use tokio_timer;
 
 use telegram_bot_fork_raw::{Request, ResponseType};
 
-#[cfg(feature = "hyper_connector")]
-use {connector::default_connector, errors::Error};
 use connector::Connector;
 use future::{NewTelegramFuture, TelegramFuture};
 use stream::{NewUpdatesStream, UpdatesStream};
+#[cfg(feature = "hyper_connector")]
+use {connector::default_connector, errors::Error};
 
 /// Main type for sending requests to the Telegram bot API.
 #[derive(Clone)]
 pub struct Api {
+    url: Option<String>,
     inner: Rc<ApiInner>,
 }
 
 struct ApiInner {
-    url: Option<String>,
     token: String,
     connector: Box<Connector>,
 }
@@ -39,9 +37,8 @@ impl Api {
     /// use telegram_bot_fork::Api;
     ///
     /// # fn main() {
-    /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// let api = Api::new(telegram_url, telegram_token).unwrap();
+    /// let api = Api::new(telegram_token).unwrap();
     /// # }
     /// ```
     ///
@@ -53,34 +50,40 @@ impl Api {
     /// # extern crate tokio;
     /// # #[cfg(feature = "hyper_connector")]
     /// # fn main() {
-    /// use telegram_bot_fork::Api;
-    /// use telegram_bot_fork::connector::hyper;
+    /// use telegram_bot_fork::{connector::hyper, Api};
     ///
-    /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// let api = Api::with_connector(telegram_url, telegram_token, hyper::default_connector().unwrap());
+    /// let api = Api::with_connector(
+    ///     telegram_token,
+    ///     hyper::default_connector().unwrap(),
+    /// );
     /// # }
     ///
     /// # #[cfg(not(feature = "hyper_connector"))]
     /// # fn main() {}
     /// ```
     #[cfg(feature = "hyper_connector")]
-    pub fn new<T: AsRef<str>>(url: Option<T>, token: T) -> Result<Api, Error> {
-        Ok(Self::with_connector(url, token, default_connector()?))
+    pub fn new<T: AsRef<str>>(token: T) -> Result<Self, Error> {
+        Ok(Self::with_connector(token, default_connector()?))
     }
 
     pub fn with_connector<T: AsRef<str>>(
-        url: Option<T>,
         token: T,
         connector: Box<Connector>,
-    ) -> Api {
+    ) -> Self {
         Api {
+            url: None,
             inner: Rc::new(ApiInner {
-                url: url.map(|url| url.as_ref().into()),
                 token: token.as_ref().to_string(),
                 connector,
             }),
         }
+    }
+
+    pub fn set_url<T: AsRef<str>>(&mut self, url: T) -> &mut Self {
+        self.url = Some(url.as_ref().into());
+
+        self
     }
 
     /// Create a stream which produces updates from the Telegram server.
@@ -93,7 +96,7 @@ impl Api {
     /// # extern crate tokio;
     /// # use telegram_bot_fork::Api;
     /// # fn main() {
-    /// # let api: Api = Api::new(None, "token").unwrap();
+    /// # let api: Api = Api::new("token").unwrap();
     /// use futures::Stream;
     ///
     /// let future = api.stream().for_each(|update| {
@@ -119,9 +122,8 @@ impl Api {
     /// # use telegram_bot_fork::prelude::*;
     /// #
     /// # fn main() {
-    /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// # let api = Api::new(telegram_url, telegram_token).unwrap();
+    /// # let api = Api::new(telegram_token).unwrap();
     /// # if false {
     /// let chat = ChatId::new(61031);
     /// api.spawn(chat.text("Message"))
@@ -144,9 +146,8 @@ impl Api {
     /// # use telegram_bot_fork::{Api, GetMe};
     /// #
     /// # fn main() {
-    /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// # let api = Api::new(telegram_url, telegram_token).unwrap();
+    /// # let api = Api::new(telegram_token).unwrap();
     /// # if false {
     /// use std::time::Duration;
     ///
@@ -160,10 +161,8 @@ impl Api {
         request: Req,
         duration: Duration,
     ) -> TelegramFuture<Option<<Req::Response as ResponseType>::Type>> {
-        let timeout_future = tokio_timer::sleep(duration)
-            .map_err(From::from)
-            .map(|()| None);
-        let send_future = self.send(request).map(|resp| Some(resp));
+        let timeout_future = tokio_timer::sleep(duration).from_err().map(|()| None);
+        let send_future = self.send(request).map(Some);
 
         let future = timeout_future
             .select(send_future)
@@ -185,9 +184,8 @@ impl Api {
     /// # use telegram_bot_fork::{Api, GetMe};
     /// #
     /// # fn main() {
-    /// # let telegram_url = None;
     /// # let telegram_token = "token";
-    /// # let api = Api::new(telegram_url, telegram_token).unwrap();
+    /// # let api = Api::new(telegram_token).unwrap();
     /// # if false {
     /// let future = api.send(GetMe);
     /// future.and_then(|me| Ok(println!("{:?}", me)));
@@ -204,8 +202,8 @@ impl Api {
 
         let api = self.clone();
         let response = request.and_then(move |request| {
-            let ref url = api.inner.url;
-            let ref token = api.inner.token;
+            let url = &api.url;
+            let token = &api.inner.token;
             api.inner
                 .connector
                 .request(url.as_ref().map(String::as_str), token, request)

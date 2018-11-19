@@ -1,8 +1,9 @@
 use std::fmt;
 
-use serde::de;
-use serde::de::{Deserialize, Deserializer, Unexpected, Visitor};
-use serde::ser::{Serialize, Serializer};
+use serde::{
+    de::{self, Deserialize, Deserializer, Unexpected, Visitor},
+    ser::{Serialize, Serializer},
+};
 
 /// The Telegram `Integer`, currently i64.
 pub type Integer = i64;
@@ -10,7 +11,7 @@ pub type Integer = i64;
 /// The Telegram `Float`, currently f32.
 pub type Float = f32;
 
-#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Ord, Hash, Default)]
 pub struct True;
 
 impl<'de> Deserialize<'de> for True {
@@ -31,9 +32,10 @@ impl<'de> Deserialize<'de> for True {
             where
                 E: de::Error,
             {
-                match value {
-                    true => Ok(True),
-                    false => Err(E::invalid_value(Unexpected::Bool(value), &self)),
+                if value {
+                    Ok(True)
+                } else {
+                    Err(E::invalid_value(Unexpected::Bool(value), &self))
                 }
             }
         }

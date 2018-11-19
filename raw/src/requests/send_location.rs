@@ -36,8 +36,8 @@ impl SendLocation {
     {
         SendLocation {
             chat_id: chat.to_chat_ref(),
-            latitude: latitude,
-            longitude: longitude,
+            latitude,
+            longitude,
             live_period: None,
             disable_notification: false,
             reply_to_message_id: None,

@@ -49,7 +49,7 @@ impl SendChatAction {
     {
         SendChatAction {
             chat_id: chat.to_chat_ref(),
-            action: action,
+            action,
         }
     }
 }

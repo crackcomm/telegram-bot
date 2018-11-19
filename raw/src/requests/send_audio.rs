@@ -1,5 +1,4 @@
-use std::borrow::Cow;
-use std::ops::Not;
+use std::{borrow::Cow, ops::Not};
 
 use requests::*;
 use types::*;

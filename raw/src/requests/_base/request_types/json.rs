@@ -15,7 +15,7 @@ impl<Request: Serialize> RequestType for JsonRequestType<Request> {
     fn serialize(url: Self::Options, request: &Self::Request) -> Result<HttpRequest, Error> {
         let body = serde_json::to_vec(&request)?;
         Ok(HttpRequest {
-            url: url,
+            url,
             method: Method::Post,
             body: Body::Json(body),
         })

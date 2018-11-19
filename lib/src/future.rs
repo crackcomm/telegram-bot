@@ -14,7 +14,7 @@ pub trait NewTelegramFuture<T> {
 
 impl<T> NewTelegramFuture<T> for TelegramFuture<T> {
     fn new(inner: Box<Future<Item = T, Error = Error>>) -> Self {
-        Self { inner: inner }
+        Self { inner }
     }
 }
 

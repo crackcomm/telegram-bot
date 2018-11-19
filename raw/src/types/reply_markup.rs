@@ -51,7 +51,7 @@ impl Serialize for ReplyMarkup {
 }
 
 /// This object represents a custom keyboard with reply options.
-#[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
+#[derive(Debug, Clone, PartialEq, PartialOrd, Serialize, Default)]
 pub struct ReplyKeyboardMarkup {
     keyboard: Vec<Vec<KeyboardButton>>,
     #[serde(skip_serializing_if = "Not::not")]
@@ -64,12 +64,7 @@ pub struct ReplyKeyboardMarkup {
 
 impl ReplyKeyboardMarkup {
     pub fn new() -> Self {
-        ReplyKeyboardMarkup {
-            keyboard: Vec::new(),
-            resize_keyboard: false,
-            one_time_keyboard: false,
-            selective: false,
-        }
+        Default::default()
     }
 
     fn init(rows: Vec<Vec<KeyboardButton>>) -> Self {
@@ -175,7 +170,7 @@ impl From<String> for KeyboardButton {
 /// By default, custom keyboards are displayed until a new keyboard is sent
 /// by a bot. An exception is made for one-time keyboards that are hidden
 /// immediately after the user presses a button (see ReplyKeyboardMarkup).
-#[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
+#[derive(Debug, Clone, PartialEq, PartialOrd, Serialize, Default)]
 pub struct ReplyKeyboardRemove {
     remove_keyboard: True,
     #[serde(skip_serializing_if = "Not::not")]
@@ -184,10 +179,7 @@ pub struct ReplyKeyboardRemove {
 
 impl ReplyKeyboardRemove {
     pub fn new() -> Self {
-        Self {
-            remove_keyboard: True,
-            selective: false,
-        }
+        Default::default()
     }
 
     /// Use this method if you want to force reply from specific users only.
@@ -201,16 +193,14 @@ impl ReplyKeyboardRemove {
 }
 
 /// This object represents an inline keyboard that appears right next to the message it belongs to.
-#[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
+#[derive(Debug, Clone, PartialEq, PartialOrd, Serialize, Default)]
 pub struct InlineKeyboardMarkup {
     inline_keyboard: Vec<Vec<InlineKeyboardButton>>,
 }
 
 impl InlineKeyboardMarkup {
     pub fn new() -> Self {
-        Self {
-            inline_keyboard: Default::default(),
-        }
+        Default::default()
     }
 
     fn init(inline_keyboard: Vec<Vec<InlineKeyboardButton>>) -> Self {
@@ -269,9 +259,9 @@ impl Serialize for InlineKeyboardButton {
         match self.kind {
             //            Url(ref data) => raw.url = Some(data),
             CallbackData(ref data) => raw.callback_data = Some(data),
-            //            SwitchInlineQuery(ref data) => raw.switch_inline_query = Some(data),
-            //            SwitchInlineQueryCurrentChat(ref data) => raw.switch_inline_query_current_chat = Some(data),
-            //            CallbackGame(ref data) => raw.callback_game = Some(data),
+            /*            SwitchInlineQuery(ref data) => raw.switch_inline_query = Some(data),
+             *            SwitchInlineQueryCurrentChat(ref data) => raw.switch_inline_query_current_chat = Some(data),
+             *            CallbackGame(ref data) => raw.callback_game = Some(data), */
         }
 
         Serialize::serialize(&raw, serializer)
@@ -281,10 +271,10 @@ impl Serialize for InlineKeyboardButton {
 #[derive(Debug, Clone, PartialEq, PartialOrd)]
 pub enum InlineKeyboardButtonKind {
     //    Url(String), // TODO(knsd): Url?
-    CallbackData(String), //TODO(knsd) Validate size?
-                          //    SwitchInlineQuery(String),
-                          //    SwitchInlineQueryCurrentChat(String),
-                          //    CallbackGame(CallbackGame),
+    CallbackData(String), /*TODO(knsd) Validate size?
+                           *    SwitchInlineQuery(String),
+                           *    SwitchInlineQueryCurrentChat(String),
+                           *    CallbackGame(CallbackGame), */
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
@@ -306,7 +296,7 @@ struct InlineKeyboardButtonRaw<'a> {
 /// selected the bot‘s message and tapped ’Reply'). This can be
 /// extremely useful if you want to create user-friendly step-by-step
 /// interfaces without having to sacrifice privacy mod
-#[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
+#[derive(Debug, Clone, PartialEq, PartialOrd, Serialize, Default)]
 pub struct ForceReply {
     force_reply: True,
     #[serde(skip_serializing_if = "Not::not")]
@@ -315,10 +305,7 @@ pub struct ForceReply {
 
 impl ForceReply {
     pub fn new() -> Self {
-        Self {
-            force_reply: True,
-            selective: false,
-        }
+        Default::default()
     }
 
     /// Use this method if you want to force reply from specific users only.

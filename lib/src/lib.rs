@@ -25,9 +25,11 @@ pub mod connector;
 pub mod prelude;
 pub mod types;
 
-pub use self::api::Api;
-pub use self::errors::{Error, ErrorKind};
-pub use self::future::*;
+pub use self::{
+    api::Api,
+    errors::{Error, ErrorKind},
+    future::*,
+};
 pub use connector::*;
 pub use prelude::*;
 pub use stream::UpdatesStream;

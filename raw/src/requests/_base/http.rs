@@ -11,8 +11,8 @@ impl RequestUrl {
     }
 
     pub fn url(&self, url: Option<&str>, token: &str) -> String {
-        match self {
-            &RequestUrl::Method(method) => {
+        match *self {
+            RequestUrl::Method(method) => {
                 format!("{}bot{}/{}", url.unwrap_or(TELEGRAM_URL), token, method)
             }
         }
