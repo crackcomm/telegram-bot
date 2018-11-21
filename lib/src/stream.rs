@@ -58,7 +58,7 @@ impl Stream for UpdatesStream {
         match result {
             Ok(true) => {
                 self.current_request = None;
-                self.poll()
+                Ok(Async::NotReady)
             }
             Ok(false) => {
                 let timeout = self.timeout + Duration::from_secs(1);
@@ -73,7 +73,7 @@ impl Stream for UpdatesStream {
                 );
 
                 self.current_request = Some(request);
-                self.poll()
+                Ok(Async::NotReady)
             }
             Err(err) => {
                 let timeout_future = tokio_timer::sleep(self.error_delay)
