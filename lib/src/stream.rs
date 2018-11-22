@@ -1,6 +1,6 @@
 use std::{cmp::max, collections::VecDeque, time::Duration};
 
-use futures::{Async, Future, Poll, Stream};
+use futures::{Async, Future, Poll, Stream, task};
 use tokio_timer;
 
 use telegram_bot_fork_raw::{AllowedUpdate, GetUpdates, Integer, Update};
@@ -58,6 +58,7 @@ impl Stream for UpdatesStream {
         match result {
             Ok(true) => {
                 self.current_request = None;
+                task::current().notify();
                 Ok(Async::NotReady)
             }
             Ok(false) => {
@@ -73,6 +74,7 @@ impl Stream for UpdatesStream {
                 );
 
                 self.current_request = Some(request);
+                task::current().notify();
                 Ok(Async::NotReady)
             }
             Err(err) => {
