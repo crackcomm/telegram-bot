@@ -1,17 +1,40 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 0.7.3 - 2018-02-17
+## 0.7.7 - 2018-11-23
+
+### Features
+- Added new export_chat_invite_link request
+
+### Fixes
+- Fix stream long polling
+- Add current task notifying
+
+## 0.7.6 - 2018-11-19
+
+### Features
+- Pub ids for fast accessing
+- Make public all elements of `future` mod
+- Connector config improvements
+- Renamed "configure" into "new"
+
+### Fixes
+- Doc fixes
+- Fix compilation without default features
+
+## 0.7.4 - 2018-11-19
+
+### Fixes
+- Tests fixes
+- Sample fixes
+- README fixes
+
+## 0.7.3 - 2018-11-10
 
 ### Fixes
 - Samples fix for new fork
 
-## 0.7.2 - 2018-02-17
-
-### Fixes
-- README, docs and CI fixes
-
-## 0.7.1 - 2018-02-17
+## 0.7.1 - 2018-11-10
 
 ### Fixes
 - README, docs and tests fixes
@@ -19,7 +42,8 @@ All notable changes to this project will be documented in this file.
 ## 0.7.0 - 2018-11-09
 
 ### Features
-- Implemented the restrictChatMember method ([#96](https://github.com/telegram-rs/telegram-bot/pull/96))
+- Forked the original [telegra-bot](https://github.com/telegram-rs/telegram-bot) library
+- Implemented restrictChatMember method ([#96](https://github.com/telegram-rs/telegram-bot/pull/96))
 - SendDocument request implemented ([#105](https://github.com/telegram-rs/telegram-bot/pull/105))
 - Configurable getUpdates limit and language_code to User ([#108](https://github.com/telegram-rs/telegram-bot/pull/108))
 - Added missing fields for ChatMember ([#109](https://github.com/telegram-rs/telegram-bot/pull/109))
