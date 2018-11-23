@@ -6,5 +6,5 @@ pub use telegram_bot_fork_raw::{
     GetChatMember, GetChatMembersCount, GetFile, GetMe, GetUpdates, GetUserProfilePhotos,
     KickChatMember, LeaveChat, PinChatMessage, RestrictChatMember, SendAudio, SendChatAction,
     SendContact, SendLocation, SendMessage, SendVenue, StopMessageLiveLocation, UnbanChatMember,
-    UnpinChatMessage,
+    UnpinChatMessage, ExportChatInviteLink, CanExportChatInviteLink,
 };

@@ -11,5 +11,5 @@ pub use telegram_bot_fork_raw::{
     CanReplySendLocation, CanReplySendMessage, CanReplySendVenue, CanSendAudio, CanSendChatAction,
     CanSendContact, CanSendLocation, CanSendMessage, CanSendVenue, CanStopMessageLiveLocation,
     CanUnbanChatMemberForChat, CanUnbanChatMemberForUser, CanUnpinMessage, ToReplyRequest,
-    ToRequest,
+    ToRequest, ExportChatInviteLink, CanExportChatInviteLink,
 };
