@@ -21,8 +21,8 @@ impl Request for ExportChatInviteLink {
 
 impl ExportChatInviteLink {
     pub fn new<C>(chat: C) -> Self
-        where
-            C: ToChatRef,
+    where
+        C: ToChatRef,
     {
         ExportChatInviteLink {
             chat_id: chat.to_chat_ref(),
@@ -36,8 +36,8 @@ pub trait CanExportChatInviteLink {
 }
 
 impl<C> CanExportChatInviteLink for C
-    where
-        C: ToChatRef,
+where
+    C: ToChatRef,
 {
     fn export_chat_invite_link(&self) -> ExportChatInviteLink {
         ExportChatInviteLink::new(self)

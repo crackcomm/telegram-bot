@@ -67,7 +67,7 @@ pub enum ForwardFrom {
     /// Sender of the original message.
     User {
         /// Sender of the original message.
-        user: User,
+        user: Option<User>,
     },
     /// For messages forwarded from a channel, information about the original channel.
     Channel {
@@ -229,7 +229,7 @@ impl Message {
             raw.forward_from_message_id,
         ) {
             (None, &None, &None, None) => None,
-            (Some(date), &Some(ref from), &None, None) => Some(Forward {
+            (Some(date), from, &None, None) => Some(Forward {
                 date,
                 from: ForwardFrom::User { user: from.clone() },
             }),
@@ -361,7 +361,7 @@ impl ChannelPost {
             raw.forward_from_message_id,
         ) {
             (None, &None, &None, None) => None,
-            (Some(date), &Some(ref from), &None, None) => Some(Forward {
+            (Some(date), from, &None, None) => Some(Forward {
                 date,
                 from: ForwardFrom::User { user: from.clone() },
             }),

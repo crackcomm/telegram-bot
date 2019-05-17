@@ -1,6 +1,6 @@
 use std::{cmp::max, collections::VecDeque, time::Duration};
 
-use futures::{Async, Future, Poll, Stream, task};
+use futures::{task, Async, Future, Poll, Stream};
 use tokio_timer;
 
 use telegram_bot_fork_raw::{AllowedUpdate, GetUpdates, Integer, Update};

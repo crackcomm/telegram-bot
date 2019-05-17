@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.7.8 - 2019-05-17
+
+### Fixes
+- New Telegram Bot API optional ForwardFrom user
+
 ## 0.7.7 - 2018-11-23
 
 ### Features

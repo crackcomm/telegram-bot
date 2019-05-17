@@ -53,10 +53,7 @@ impl Api {
     /// use telegram_bot_fork::{connector::hyper, Api};
     ///
     /// # let telegram_token = "token";
-    /// let api = Api::with_connector(
-    ///     telegram_token,
-    ///     hyper::default_connector().unwrap(),
-    /// );
+    /// let api = Api::with_connector(telegram_token, hyper::default_connector().unwrap());
     /// # }
     ///
     /// # #[cfg(not(feature = "hyper_connector"))]
@@ -67,10 +64,7 @@ impl Api {
         Ok(Self::with_connector(token, default_connector()?))
     }
 
-    pub fn with_connector<T: AsRef<str>>(
-        token: T,
-        connector: Box<Connector>,
-    ) -> Self {
+    pub fn with_connector<T: AsRef<str>>(token: T, connector: Box<Connector>) -> Self {
         Api {
             url: None,
             inner: Rc::new(ApiInner {

@@ -94,6 +94,7 @@ pub enum ChatRef {
     Id(ChatId),
     #[doc(hidden)]
     ChannelUsername(String),
+    None,
 }
 
 impl ChatRef {
@@ -144,7 +145,10 @@ impl ToChatRef for ChatMember {
 impl ToChatRef for ForwardFrom {
     fn to_chat_ref(&self) -> ChatRef {
         match *self {
-            ForwardFrom::User { ref user, .. } => user.to_chat_ref(),
+            ForwardFrom::User { ref user, .. } => match user {
+                Some(user) => user.to_chat_ref(),
+                None => ChatRef::None,
+            },
             ForwardFrom::Channel { ref channel, .. } => channel.to_chat_ref(),
         }
     }
@@ -164,6 +168,7 @@ impl Serialize for ChatRef {
         match *self {
             ChatRef::Id(id) => serializer.serialize_i64(id.into()),
             ChatRef::ChannelUsername(ref username) => serializer.serialize_str(&username),
+            ChatRef::None => serializer.serialize_none(),
         }
     }
 }

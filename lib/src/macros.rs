@@ -178,9 +178,9 @@ mod tests {
         assert_eq!(
             keyboard,
             reply_markup!(
-            reply_keyboard, [], ["foo", "bar"], ["baz"],
-            ["contact" contact, "location" location]
-        )
+                reply_keyboard, [], ["foo", "bar"], ["baz"],
+                ["contact" contact, "location" location]
+            )
         );
 
         {
@@ -190,40 +190,40 @@ mod tests {
         assert_eq!(
             keyboard,
             reply_markup!(
-            reply_keyboard, [], ["foo", "bar"], ["baz"],
-            ["contact" contact, "location" location],
-            ["spam"]
-        )
+                reply_keyboard, [], ["foo", "bar"], ["baz"],
+                ["contact" contact, "location" location],
+                ["spam"]
+            )
         );
 
         keyboard.selective();
         assert_eq!(
             keyboard,
             reply_markup!(
-            reply_keyboard, selective, [], ["foo", "bar"], ["baz"],
-            ["contact" contact, "location" location],
-            ["spam"]
-        )
+                reply_keyboard, selective, [], ["foo", "bar"], ["baz"],
+                ["contact" contact, "location" location],
+                ["spam"]
+            )
         );
 
         keyboard.resize_keyboard();
         assert_eq!(
             keyboard,
             reply_markup!(
-            reply_keyboard, resize, selective, [], ["foo", "bar"], ["baz"],
-            ["contact" contact, "location" location],
-            ["spam"]
-        )
+                reply_keyboard, resize, selective, [], ["foo", "bar"], ["baz"],
+                ["contact" contact, "location" location],
+                ["spam"]
+            )
         );
 
         keyboard.one_time_keyboard();
         assert_eq!(
             keyboard,
             reply_markup!(
-            reply_keyboard, resize, selective, one_time, [], ["foo", "bar"], ["baz"],
-            ["contact" contact, "location" location],
-            ["spam"]
-        )
+                reply_keyboard, resize, selective, one_time, [], ["foo", "bar"], ["baz"],
+                ["contact" contact, "location" location],
+                ["spam"]
+            )
         );
     }
 
