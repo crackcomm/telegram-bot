@@ -1,15 +1,18 @@
 use std::fmt::Debug;
 
-use future::TelegramFuture;
+use async_trait::async_trait;
 
 use telegram_bot_fork_raw::{HttpRequest, HttpResponse};
 
+use crate::Error;
+
 /// Connector provides basic IO with Telegram Bot API server.
-pub trait Connector: Debug {
-    fn request(
+#[async_trait]
+pub trait Connector: Clone + Debug + Send + Sync + 'static {
+    async fn request(
         &self,
         url: Option<&str>,
         token: &str,
         req: HttpRequest,
-    ) -> TelegramFuture<HttpResponse>;
+    ) -> Result<HttpResponse, Error>;
 }

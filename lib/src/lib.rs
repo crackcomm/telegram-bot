@@ -1,14 +1,14 @@
 //! This crate helps writing bots for the messenger Telegram.
 //! See [readme](https://github.com/telegram-rs/telegram-bot) for details.
+#![feature(box_syntax, try_trait, generators)]
 
 extern crate antidote;
 #[macro_use]
-extern crate error_chain;
+extern crate failure;
 extern crate futures;
 extern crate http;
 extern crate telegram_bot_fork_raw;
 extern crate tokio;
-extern crate tokio_timer;
 
 #[cfg(feature = "hyper_connector")]
 extern crate hyper;
@@ -17,7 +17,6 @@ extern crate hyper_tls;
 
 mod api;
 mod errors;
-mod future;
 mod macros;
 mod stream;
 
@@ -26,11 +25,10 @@ pub mod prelude;
 pub mod types;
 
 pub use self::{
-    api::Api,
-    errors::{Error, ErrorKind},
-    future::*,
+    api::{Api, DefaultApi},
+    connector::*,
+    errors::Error,
+    prelude::*,
+    stream::UpdatesStream,
+    types::*,
 };
-pub use connector::*;
-pub use prelude::*;
-pub use stream::UpdatesStream;
-pub use types::*;

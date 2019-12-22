@@ -1,6 +1,6 @@
 [package]
 name = "telegram-bot-fork"
-version = "0.7.8"
+version = "0.8.0"
 authors = ["Lukas Kalbertodt <lukas.kalbertodt@gmail.com>", "Fedor Gogolev <knsd@knsd.net>", "Emulator000 <emulator@hotmail.it>"]
 description = "A library for creating Telegram bots"
 documentation = "https://docs.rs/telegram-bot-fork/"
@@ -9,17 +9,24 @@ readme = "../README.md"
 keywords = ["telegram", "bot", "chat", "api"]
 categories = ["api-bindings", "asynchronous"]
 license = "MIT"
+edition = "2018"
 
 [dependencies]
+futures = "^0.3.1"
+futures-async-stream = "0.1"
 antidote = "^1.0"
-tokio = "^0.1"
-tokio-timer = "^0.2"
-error-chain = "^0.11"
-futures = "^0.1"
+failure = "^0.1.5"
 http = "^0.1"
 telegram-bot-fork-raw = { version = "=0.7.8", path = "../raw" }
-hyper = { version = "^0.12", optional = true }
-hyper-tls = { version = "^0.3", optional = true }
+hyper-tls = { version = "^0.4.0", optional = true }
+tokio = { version = "0.2.4", features = ["full"] }
+
+async-trait = "0.1.21"
+
+[dependencies.hyper]
+optional = true
+version = "^0.13.1"
+features = ["runtime", "stream"]
 
 [features]
 default = ["hyper_connector"]

@@ -36,9 +36,8 @@ macro_rules! reply_markup {
     });
 
     (remove_keyboard, selective) => ({
-          let mut keyboard = reply_markup!(remove_keyboard);
-          keyboard.selective();
-          keyboard
+          let  keyboard = reply_markup!(remove_keyboard);
+          keyboard.selective()
     });
 
     (force_reply) => ({
@@ -46,9 +45,8 @@ macro_rules! reply_markup {
     });
 
     (force_reply, selective) => ({
-          let mut keyboard = reply_markup!(force_reply);
-          keyboard.selective();
-          keyboard
+          let  keyboard = reply_markup!(force_reply);
+          keyboard.selective()
     });
 
     (reply_keyboard, $($content:tt)*) => ({
@@ -56,21 +54,18 @@ macro_rules! reply_markup {
     });
 
     (_reply_keyboard, resize, $($content:tt)*) => ({
-        let mut keyboard = reply_markup!(_reply_keyboard, $($content)*);
-        keyboard.resize_keyboard();
-        keyboard
+        let  keyboard = reply_markup!(_reply_keyboard, $($content)*);
+        keyboard.resize_keyboard()
     });
 
     (_reply_keyboard, one_time, $($content:tt)*) => ({
-        let mut keyboard = reply_markup!(_reply_keyboard, $($content)*);
-        keyboard.one_time_keyboard();
-        keyboard
+        let  keyboard = reply_markup!(_reply_keyboard, $($content)*);
+        keyboard.one_time_keyboard()
     });
 
     (_reply_keyboard, selective, $($content:tt)*) => ({
-        let mut keyboard = reply_markup!(_reply_keyboard, $($content)*);
-        keyboard.selective();
-        keyboard
+        let  keyboard = reply_markup!(_reply_keyboard, $($content)*);
+        keyboard.selective()
     });
 
     (_reply_keyboard, $([$($content:tt)*]), *) => (
@@ -92,15 +87,13 @@ macro_rules! reply_markup {
     (_reply_keyboard_row, $($content:tt)*) => (reply_markup!(_reply_keyboard_row, (); $($content)*));
 
     (_reply_keyboard_button, $value:expr, contact) => ({
-        let mut button: $crate::KeyboardButton = reply_markup!(_reply_keyboard_button, $value);
-        button.request_contact();
-        button
+        let button: $crate::KeyboardButton = reply_markup!(_reply_keyboard_button, $value);
+        button.request_contact()
     });
 
     (_reply_keyboard_button, $value:expr, location) => ({
-        let mut button: $crate::KeyboardButton = reply_markup!(_reply_keyboard_button, $value);
-        button.request_location();
-        button
+        let button: $crate::KeyboardButton = reply_markup!(_reply_keyboard_button, $value);
+        button.request_location()
     });
     (_reply_keyboard_button, $value:expr) => ($value.into());
 
@@ -130,13 +123,13 @@ mod tests {
         let mut remove_keyboard = ReplyKeyboardRemove::new();
         assert_eq!(remove_keyboard, reply_markup!(remove_keyboard));
 
-        remove_keyboard.selective();
+        remove_keyboard = remove_keyboard.selective();
         assert_eq!(remove_keyboard, reply_markup!(remove_keyboard, selective));
 
         let mut force_reply = ForceReply::new();
         assert_eq!(force_reply, reply_markup!(force_reply));
 
-        force_reply.selective();
+        force_reply = force_reply.selective();
         assert_eq!(force_reply, reply_markup!(force_reply, selective));
     }
 
@@ -168,11 +161,11 @@ mod tests {
             let row = keyboard.add_empty_row();
 
             let mut contact_button = KeyboardButton::new("contact");
-            contact_button.request_contact();
+            contact_button = contact_button.request_contact();
             row.push(contact_button);
 
             let mut location_button = KeyboardButton::new("location");
-            location_button.request_location();
+            location_button = location_button.request_location();
             row.push(location_button)
         }
         assert_eq!(
@@ -196,7 +189,7 @@ mod tests {
             )
         );
 
-        keyboard.selective();
+        keyboard = keyboard.selective();
         assert_eq!(
             keyboard,
             reply_markup!(
@@ -206,7 +199,7 @@ mod tests {
             )
         );
 
-        keyboard.resize_keyboard();
+        keyboard = keyboard.resize_keyboard();
         assert_eq!(
             keyboard,
             reply_markup!(
@@ -216,7 +209,7 @@ mod tests {
             )
         );
 
-        keyboard.one_time_keyboard();
+        keyboard = keyboard.one_time_keyboard();
         assert_eq!(
             keyboard,
             reply_markup!(
