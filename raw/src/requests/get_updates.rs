@@ -1,5 +1,4 @@
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to receive incoming updates using long polling.
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize, Default)]
@@ -28,22 +27,22 @@ impl GetUpdates {
         Default::default()
     }
 
-    pub fn offset(&mut self, offset: Integer) -> &mut Self {
+    pub fn offset(mut self, offset: Integer) -> Self {
         self.offset = Some(offset);
         self
     }
 
-    pub fn limit(&mut self, limit: Integer) -> &mut Self {
+    pub fn limit(mut self, limit: Integer) -> Self {
         self.limit = Some(limit);
         self
     }
 
-    pub fn timeout(&mut self, timeout: Integer) -> &mut Self {
+    pub fn timeout(mut self, timeout: Integer) -> Self {
         self.timeout = Some(timeout);
         self
     }
 
-    pub fn allowed_updates(&mut self, updates: &[AllowedUpdate]) -> &mut Self {
+    pub fn allowed_updates(mut self, updates: &[AllowedUpdate]) -> Self {
         self.allowed_updates = updates.to_vec();
         self
     }

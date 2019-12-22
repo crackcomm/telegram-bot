@@ -1,5 +1,5 @@
 #[macro_use]
-extern crate error_chain;
+extern crate failure;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
@@ -10,6 +10,4 @@ pub mod requests;
 pub mod types;
 pub mod url;
 
-pub use requests::*;
-pub use types::*;
-pub use url::*;
+pub use self::{requests::*, types::*, url::*};

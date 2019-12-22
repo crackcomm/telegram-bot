@@ -1,16 +1,27 @@
-use types::*;
+use crate::types::*;
 
-error_chain! {
-    foreign_links {
-        Json(::serde_json::Error);
-    }
+/// Telegram bot module error type.
+#[derive(Debug, Fail)]
+pub enum Error {
+    /// Empty body error.
+    #[fail(display = "empty body")]
+    EmptyBody,
 
-    errors {
-        EmptyBody
-        TelegramError {
-            description: String,
-            parameters: Option<ResponseParameters>
-        }
-        DetachedError(err: String)
+    /// Telegram error.
+    #[fail(display = "Telegram error: {} params: {:?}", _0, _1)]
+    Telegram(String, Option<ResponseParameters>),
+
+    /// Detached error.
+    #[fail(display = "Detached error: {}", _0)]
+    Detached(String),
+
+    /// Serde JSON error.
+    #[fail(display = "serde json error: {:?}", _0)]
+    Json(#[cause] serde_json::Error),
+}
+
+impl From<serde_json::Error> for Error {
+    fn from(err: serde_json::Error) -> Error {
+        Error::Json(err)
     }
 }

@@ -1,5 +1,4 @@
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 // Use this method to delete a message.
 // A message can only be deleted if it was sent less than 48 hours ago.

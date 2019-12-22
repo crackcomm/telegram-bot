@@ -1,7 +1,6 @@
 use serde::de::{Deserialize, Deserializer, Error};
 
-use types::*;
-use url::*;
+use crate::{types::*, url::*};
 
 /// This object represents a chat message or a channel post.
 #[derive(Debug, Clone, PartialEq, PartialOrd)]

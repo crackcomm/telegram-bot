@@ -1,4 +1,4 @@
-use url::TELEGRAM_URL;
+use crate::url::TELEGRAM_URL;
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum RequestUrl {
@@ -29,8 +29,6 @@ pub enum Method {
 pub enum Body {
     Empty,
     Json(Vec<u8>),
-    #[doc(hidden)]
-    __Nonexhaustive,
 }
 
 #[derive(Debug, Clone, PartialEq, PartialOrd, Eq, Ord, Hash)]

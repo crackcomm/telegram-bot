@@ -1,7 +1,6 @@
 use std::ops::Not;
 
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to send point on the map.
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
@@ -46,17 +45,17 @@ impl SendLocation {
     }
 
     /// Period in seconds for which the location will be updated, should be between 60 and 86400.
-    pub fn live_period(&mut self, period: Integer) -> &mut Self {
+    pub fn live_period(mut self, period: Integer) -> Self {
         self.live_period = Some(period);
         self
     }
 
-    pub fn disable_notification(&mut self) -> &mut Self {
+    pub fn disable_notification(mut self) -> Self {
         self.disable_notification = true;
         self
     }
 
-    pub fn reply_to<R>(&mut self, to: R) -> &mut Self
+    pub fn reply_to<R>(mut self, to: R) -> Self
     where
         R: ToMessageId,
     {
@@ -64,7 +63,7 @@ impl SendLocation {
         self
     }
 
-    pub fn reply_markup<R>(&mut self, reply_markup: R) -> &mut Self
+    pub fn reply_markup<R>(mut self, reply_markup: R) -> Self
     where
         R: Into<ReplyMarkup>,
     {
@@ -97,9 +96,8 @@ where
     M: ToMessageId + ToSourceChat,
 {
     fn location_reply(&self, latitude: Float, longitude: Float) -> SendLocation {
-        let mut rq = self.to_source_chat().location(latitude, longitude);
-        rq.reply_to(self.to_message_id());
-        rq
+        let rq = self.to_source_chat().location(latitude, longitude);
+        rq.reply_to(self.to_message_id())
     }
 }
 

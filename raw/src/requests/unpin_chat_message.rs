@@ -1,5 +1,4 @@
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 ///Use this method to unpin a message in a supergroup or a channel.
 /// The bot must be an administrator in the chat for this to work

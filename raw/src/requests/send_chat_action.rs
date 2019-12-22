@@ -1,5 +1,4 @@
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Strongly typed ChatAction. Instead of passing a String to the
 /// `chat_action` method, this is used.

@@ -1,8 +1,7 @@
 use serde::de::DeserializeOwned;
 use serde_json;
 
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 pub trait JsonResponse {
     type Raw;
@@ -47,14 +46,10 @@ where
                 ResponseWrapper::Error {
                     description,
                     parameters,
-                } => Err(ErrorKind::TelegramError {
-                    description,
-                    parameters,
-                }
-                .into()),
+                } => Err(Error::Telegram(description, parameters)),
             }
         } else {
-            Err(ErrorKind::EmptyBody.into())
+            Err(Error::EmptyBody)
         }
     }
 }

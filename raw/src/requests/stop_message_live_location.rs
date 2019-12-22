@@ -1,5 +1,4 @@
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to stop updating a live location message sent by the bot
 /// before live_period expires.
@@ -34,7 +33,7 @@ impl StopMessageLiveLocation {
         }
     }
 
-    pub fn reply_markup<R>(&mut self, reply_markup: R) -> &mut Self
+    pub fn reply_markup<R>(mut self, reply_markup: R) -> Self
     where
         R: Into<ReplyMarkup>,
     {

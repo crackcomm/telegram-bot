@@ -1,7 +1,6 @@
 use std::{borrow::Cow, ops::Not};
 
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to send answers to callback queries sent from inline keyboards.
 /// The answer will be displayed to the user as a notification at the top of
@@ -59,7 +58,7 @@ impl<'t> AnswerCallbackQuery<'t> {
 
     /// An alert will be shown by the client instead of a notification
     /// at the top of the chat screen.
-    pub fn show_alert(&mut self) -> &mut Self {
+    pub fn show_alert(mut self) -> Self {
         self.show_alert = true;
         self
     }
@@ -70,7 +69,7 @@ impl<'t> AnswerCallbackQuery<'t> {
     /// comes from a callback_game button.
     ///
     /// Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
-    pub fn url<T>(&mut self, url: T) -> &mut Self
+    pub fn url<T>(mut self, url: T) -> Self
     where
         T: Into<Cow<'t, str>>,
     {
@@ -81,7 +80,7 @@ impl<'t> AnswerCallbackQuery<'t> {
     /// The maximum amount of time in seconds that the result of the callback query
     /// may be cached client-side. Telegram apps will support caching starting in
     /// version 3.14. Defaults to 0.
-    pub fn cache_time(&mut self, time: i64) -> &mut Self {
+    pub fn cache_time(mut self, time: i64) -> Self {
         self.cache_time = Some(time);
         self
     }

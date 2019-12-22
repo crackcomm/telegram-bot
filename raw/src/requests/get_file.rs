@@ -1,5 +1,4 @@
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to get basic info about a file and prepare it for downloading.
 /// For the moment, bots can download files of up to 20MB in size.

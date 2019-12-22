@@ -1,8 +1,6 @@
-use std::ops::Not;
-use std::borrow::Cow;
+use std::{borrow::Cow, ops::Not};
 
-use types::*;
-use requests::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to send general files. On success, the sent Message is returned.
 /// Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
@@ -49,7 +47,7 @@ impl<'s, 'c, 'p, 't> SendDocument<'s, 'c, 'p, 't> {
         }
     }
 
-    pub fn caption<T>(&mut self, caption: T) -> &mut Self
+    pub fn caption<T>(mut self, caption: T) -> Self
     where
         T: Into<Cow<'c, str>>,
     {
@@ -57,12 +55,12 @@ impl<'s, 'c, 'p, 't> SendDocument<'s, 'c, 'p, 't> {
         self
     }
 
-    pub fn parse_mode(&mut self, parse_mode: ParseMode) -> &mut Self {
+    pub fn parse_mode(mut self, parse_mode: ParseMode) -> Self {
         self.parse_mode = Some(parse_mode);
         self
     }
 
-    pub fn reply_to<R>(&mut self, to: R) -> &mut Self
+    pub fn reply_to<R>(mut self, to: R) -> Self
     where
         R: ToMessageId,
     {
@@ -70,7 +68,7 @@ impl<'s, 'c, 'p, 't> SendDocument<'s, 'c, 'p, 't> {
         self
     }
 
-    pub fn reply_markup<R>(&mut self, reply_markup: R) -> &mut Self
+    pub fn reply_markup<R>(mut self, reply_markup: R) -> Self
     where
         R: Into<ReplyMarkup>,
     {

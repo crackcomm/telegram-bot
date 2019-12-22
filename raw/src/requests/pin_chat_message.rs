@@ -1,7 +1,6 @@
 use std::ops::Not;
 
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to pin a message in a supergroup or a channel.
 /// The bot must be an administrator in the chat for this to work
@@ -38,7 +37,7 @@ impl PinChatMessage {
         }
     }
 
-    pub fn disable_notification(&mut self) -> &mut Self {
+    pub fn disable_notification(mut self) -> Self {
         self.disable_notification = true;
         self
     }

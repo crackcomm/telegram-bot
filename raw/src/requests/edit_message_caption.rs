@@ -1,7 +1,6 @@
 use std::borrow::Cow;
 
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to edit captions of messages sent by the bot.
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
@@ -38,7 +37,7 @@ impl<'s> EditMessageCaption<'s> {
         }
     }
 
-    pub fn reply_markup<R>(&mut self, reply_markup: R) -> &mut Self
+    pub fn reply_markup<R>(mut self, reply_markup: R) -> Self
     where
         R: Into<ReplyMarkup>,
     {

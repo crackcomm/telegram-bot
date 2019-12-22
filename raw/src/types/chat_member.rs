@@ -2,7 +2,7 @@ use std::fmt;
 
 use serde::de::{self, Deserialize, Deserializer, Visitor};
 
-use types::*;
+use crate::types::*;
 
 /// The member's status in the chat
 #[derive(Debug, Clone, PartialEq, PartialOrd, Eq, Ord, Hash)]

@@ -1,5 +1,4 @@
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to get the number of members in a chat.
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]

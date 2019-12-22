@@ -1,5 +1,4 @@
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to kick a user from a group or a supergroup.
 /// In the case of supergroups, the user will not be able to return to the group on
@@ -43,27 +42,27 @@ impl RestrictChatMember {
         }
     }
 
-    pub fn until_date(&mut self, value: i32) -> &mut Self {
+    pub fn until_date(mut self, value: i32) -> Self {
         self.until_date = Some(value);
         self
     }
 
-    pub fn can_send_messages(&mut self, value: bool) -> &mut Self {
+    pub fn can_send_messages(mut self, value: bool) -> Self {
         self.can_send_messages = Some(value);
         self
     }
 
-    pub fn can_send_media_messages(&mut self, value: bool) -> &mut Self {
+    pub fn can_send_media_messages(mut self, value: bool) -> Self {
         self.can_send_media_messages = Some(value);
         self
     }
 
-    pub fn can_send_other_messages(&mut self, value: bool) -> &mut Self {
+    pub fn can_send_other_messages(mut self, value: bool) -> Self {
         self.can_send_other_messages = Some(value);
         self
     }
 
-    pub fn can_add_web_page_previews(&mut self, value: bool) -> &mut Self {
+    pub fn can_add_web_page_previews(mut self, value: bool) -> Self {
         self.can_add_web_page_previews = Some(value);
         self
     }

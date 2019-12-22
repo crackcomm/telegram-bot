@@ -12,10 +12,11 @@ readme = "../README.md"
 keywords = ["telegram", "bot", "chat", "api"]
 categories = ["api-bindings"]
 license = "MIT"
+edition = "2018"
 
 [dependencies]
 serde = "^1.0"
 serde_derive = "^1.0"
 serde_json = "^1.0"
 serde-value = "^0.5"
-error-chain = "^0.11"
+failure = "^0.1.5"

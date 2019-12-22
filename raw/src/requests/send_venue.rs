@@ -1,7 +1,6 @@
 use std::{borrow::Cow, ops::Not};
 
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to send information about a venue.
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
@@ -51,12 +50,12 @@ impl<'t, 'a, 'f> SendVenue<'t, 'a, 'f> {
         }
     }
 
-    pub fn disable_notification(&mut self) -> &mut Self {
+    pub fn disable_notification(mut self) -> Self {
         self.disable_notification = true;
         self
     }
 
-    pub fn foursquare_id<F>(&mut self, id: F) -> &mut Self
+    pub fn foursquare_id<F>(mut self, id: F) -> Self
     where
         F: Into<Cow<'f, str>>,
     {
@@ -64,7 +63,7 @@ impl<'t, 'a, 'f> SendVenue<'t, 'a, 'f> {
         self
     }
 
-    pub fn reply_to<R>(&mut self, to: R) -> &mut Self
+    pub fn reply_to<R>(mut self, to: R) -> Self
     where
         R: ToMessageId,
     {
@@ -72,7 +71,7 @@ impl<'t, 'a, 'f> SendVenue<'t, 'a, 'f> {
         self
     }
 
-    pub fn reply_markup<R>(&mut self, reply_markup: R) -> &mut Self
+    pub fn reply_markup<R>(mut self, reply_markup: R) -> Self
     where
         R: Into<ReplyMarkup>,
     {
@@ -143,11 +142,10 @@ where
         T: Into<Cow<'t, str>>,
         A: Into<Cow<'a, str>>,
     {
-        let mut rq = self
+        let rq = self
             .to_source_chat()
             .venue(latitude, longitude, title, address);
-        rq.reply_to(self.to_message_id());
-        rq
+        rq.reply_to(self.to_message_id())
     }
 }
 
@@ -165,7 +163,7 @@ impl<'b> ToRequest<'b> for Venue {
             self.address.as_str(),
         );
         if let Some(ref foursquare_id) = self.foursquare_id {
-            rq.foursquare_id(foursquare_id.as_str());
+            rq = rq.foursquare_id(foursquare_id.as_str());
         }
         rq
     }
@@ -185,7 +183,7 @@ impl<'b> ToReplyRequest<'b> for Venue {
             self.address.as_str(),
         );
         if let Some(ref foursquare_id) = self.foursquare_id {
-            rq.foursquare_id(foursquare_id.as_str());
+            rq = rq.foursquare_id(foursquare_id.as_str());
         }
         rq
     }

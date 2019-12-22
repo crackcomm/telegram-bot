@@ -1,7 +1,6 @@
 use std::{borrow::Cow, ops::Not};
 
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to edit text messages sent by the bot.
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
@@ -44,17 +43,17 @@ impl<'s> EditMessageText<'s> {
         }
     }
 
-    pub fn parse_mode(&mut self, parse_mode: ParseMode) -> &mut Self {
+    pub fn parse_mode(mut self, parse_mode: ParseMode) -> Self {
         self.parse_mode = Some(parse_mode);
         self
     }
 
-    pub fn disable_preview(&mut self) -> &mut Self {
+    pub fn disable_preview(mut self) -> Self {
         self.disable_web_page_preview = true;
         self
     }
 
-    pub fn reply_markup<R>(&mut self, reply_markup: R) -> &mut Self
+    pub fn reply_markup<R>(mut self, reply_markup: R) -> Self
     where
         R: Into<ReplyMarkup>,
     {

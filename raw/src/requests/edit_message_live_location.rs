@@ -1,5 +1,4 @@
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to edit live location messages sent by the bot.
 /// A location can be edited until its live_period expires or editing
@@ -39,7 +38,7 @@ impl EditMessageLiveLocation {
         }
     }
 
-    pub fn reply_markup<R>(&mut self, reply_markup: R) -> &mut Self
+    pub fn reply_markup<R>(mut self, reply_markup: R) -> Self
     where
         R: Into<ReplyMarkup>,
     {

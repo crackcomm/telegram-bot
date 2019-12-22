@@ -2,7 +2,7 @@ use std::ops::Not;
 
 use serde::ser::{Serialize, Serializer};
 
-use types::*;
+use crate::types::*;
 
 #[derive(Debug, Clone, PartialEq, PartialOrd)]
 pub enum ReplyMarkup {
@@ -77,7 +77,7 @@ impl ReplyKeyboardMarkup {
     /// optimal fit (e.g., make the keyboard smaller if there
     /// are just two rows of buttons). Defaults to false, in which case
     /// the custom keyboard is always of the same height as the app's standard keyboard.
-    pub fn resize_keyboard(&mut self) -> &mut Self {
+    pub fn resize_keyboard(mut self) -> Self {
         self.resize_keyboard = true;
         self
     }
@@ -87,7 +87,7 @@ impl ReplyKeyboardMarkup {
     /// display the usual letter-keyboard in the chat – the user can
     /// press a special button in the input field to see the custom
     /// keyboard again. Defaults to false.
-    pub fn one_time_keyboard(&mut self) -> &mut Self {
+    pub fn one_time_keyboard(mut self) -> Self {
         self.one_time_keyboard = true;
         self
     }
@@ -96,7 +96,7 @@ impl ReplyKeyboardMarkup {
     /// Targets: 1) users that are @mentioned in the text of
     /// the Message object; 2) if the bot's message is a reply (has reply_to_message_id),
     /// sender of the original message.
-    pub fn selective(&mut self) -> &mut Self {
+    pub fn selective(mut self) -> Self {
         self.selective = true;
         self
     }
@@ -138,7 +138,7 @@ impl KeyboardButton {
 
     /// The user's phone number will be sent as a contact when the
     /// button is pressed. Available in private chats only
-    pub fn request_contact(&mut self) -> &mut Self {
+    pub fn request_contact(mut self) -> Self {
         self.request_location = false;
         self.request_contact = true;
         self
@@ -146,7 +146,7 @@ impl KeyboardButton {
 
     /// The user's current location will be sent when the
     /// button is pressed. Available in private chats only
-    pub fn request_location(&mut self) -> &mut Self {
+    pub fn request_location(mut self) -> Self {
         self.request_contact = false;
         self.request_location = true;
         self
@@ -186,7 +186,7 @@ impl ReplyKeyboardRemove {
     /// Targets: 1) users that are @mentioned in the text of
     /// the Message object; 2) if the bot's message is a reply (has reply_to_message_id),
     /// sender of the original message.
-    pub fn selective(&mut self) -> &mut Self {
+    pub fn selective(mut self) -> Self {
         self.selective = true;
         self
     }
@@ -312,7 +312,7 @@ impl ForceReply {
     /// Targets: 1) users that are @mentioned in the text of
     /// the Message object; 2) if the bot's message is a reply (has reply_to_message_id),
     /// sender of the original message.
-    pub fn selective(&mut self) -> &mut Self {
+    pub fn selective(mut self) -> Self {
         self.selective = true;
         self
     }

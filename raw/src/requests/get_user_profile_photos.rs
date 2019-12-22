@@ -1,5 +1,4 @@
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to get a list of profile pictures for a user.
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
@@ -31,12 +30,12 @@ impl GetUserProfilePhotos {
         }
     }
 
-    pub fn offset(&mut self, offset: Integer) -> &mut Self {
+    pub fn offset(mut self, offset: Integer) -> Self {
         self.offset = Some(offset);
         self
     }
 
-    pub fn limit(&mut self, limit: Integer) -> &mut Self {
+    pub fn limit(mut self, limit: Integer) -> Self {
         self.limit = Some(limit);
         self
     }

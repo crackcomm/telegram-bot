@@ -1,5 +1,4 @@
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to get up to date information about the chat.
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]

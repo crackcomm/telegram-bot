@@ -1,7 +1,6 @@
 use std::{borrow::Cow, ops::Not};
 
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to send phone contacts.
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
@@ -47,7 +46,7 @@ impl<'p, 'f, 'l> SendContact<'p, 'f, 'l> {
         }
     }
 
-    pub fn last_name<F>(&mut self, last_name: F) -> &mut Self
+    pub fn last_name<F>(mut self, last_name: F) -> Self
     where
         F: Into<Cow<'l, str>>,
     {
@@ -55,12 +54,12 @@ impl<'p, 'f, 'l> SendContact<'p, 'f, 'l> {
         self
     }
 
-    pub fn disable_notification(&mut self) -> &mut Self {
+    pub fn disable_notification(mut self) -> Self {
         self.disable_notification = true;
         self
     }
 
-    pub fn reply_to<R>(&mut self, to: R) -> &mut Self
+    pub fn reply_to<R>(mut self, to: R) -> Self
     where
         R: ToMessageId,
     {
@@ -68,7 +67,7 @@ impl<'p, 'f, 'l> SendContact<'p, 'f, 'l> {
         self
     }
 
-    pub fn reply_markup<R>(&mut self, reply_markup: R) -> &mut Self
+    pub fn reply_markup<R>(mut self, reply_markup: R) -> Self
     where
         R: Into<ReplyMarkup>,
     {
@@ -123,9 +122,8 @@ where
         P: Into<Cow<'p, str>>,
         F: Into<Cow<'f, str>>,
     {
-        let mut rq = self.to_source_chat().contact(phone_number, first_name);
-        rq.reply_to(self.to_message_id());
-        rq
+        let rq = self.to_source_chat().contact(phone_number, first_name);
+        rq.reply_to(self.to_message_id())
     }
 }
 
@@ -138,7 +136,7 @@ impl<'b> ToRequest<'b> for Contact {
     {
         let mut rq = chat.contact(self.phone_number.as_str(), self.first_name.as_str());
         if let Some(ref last_name) = self.last_name {
-            rq.last_name(last_name.as_str());
+            rq = rq.last_name(last_name.as_str());
         }
         rq
     }
@@ -153,7 +151,7 @@ impl<'b> ToReplyRequest<'b> for Contact {
     {
         let mut rq = message.contact_reply(self.phone_number.as_str(), self.first_name.as_str());
         if let Some(ref last_name) = self.last_name {
-            rq.last_name(last_name.as_str());
+            rq = rq.last_name(last_name.as_str());
         }
         rq
     }

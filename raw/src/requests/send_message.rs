@@ -1,7 +1,6 @@
 use std::{borrow::Cow, ops::Not};
 
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to send text messages.
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
@@ -47,22 +46,22 @@ impl<'s> SendMessage<'s> {
         }
     }
 
-    pub fn parse_mode(&mut self, parse_mode: ParseMode) -> &mut Self {
+    pub fn parse_mode(mut self, parse_mode: ParseMode) -> Self {
         self.parse_mode = Some(parse_mode);
         self
     }
 
-    pub fn disable_preview(&mut self) -> &mut Self {
+    pub fn disable_preview(mut self) -> Self {
         self.disable_web_page_preview = true;
         self
     }
 
-    pub fn disable_notification(&mut self) -> &mut Self {
+    pub fn disable_notification(mut self) -> Self {
         self.disable_notification = true;
         self
     }
 
-    pub fn reply_to<R>(&mut self, to: R) -> &mut Self
+    pub fn reply_to<R>(mut self, to: R) -> Self
     where
         R: ToMessageId,
     {
@@ -70,7 +69,7 @@ impl<'s> SendMessage<'s> {
         self
     }
 
-    pub fn reply_markup<R>(&mut self, reply_markup: R) -> &mut Self
+    pub fn reply_markup<R>(mut self, reply_markup: R) -> Self
     where
         R: Into<ReplyMarkup>,
     {
@@ -113,8 +112,7 @@ where
     where
         T: Into<Cow<'s, str>>,
     {
-        let mut rq = self.to_source_chat().text(text);
-        rq.reply_to(self.to_message_id());
-        rq
+        let rq = self.to_source_chat().text(text);
+        rq.reply_to(self.to_message_id())
     }
 }

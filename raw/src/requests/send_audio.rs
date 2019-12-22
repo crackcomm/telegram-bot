@@ -1,7 +1,6 @@
 use std::{borrow::Cow, ops::Not};
 
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to send an audio
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
@@ -56,7 +55,7 @@ impl<'s, 'c, 'p, 't> SendAudio<'s, 'c, 'p, 't> {
         }
     }
 
-    pub fn caption<T>(&mut self, caption: T) -> &mut Self
+    pub fn caption<T>(mut self, caption: T) -> Self
     where
         T: Into<Cow<'c, str>>,
     {
@@ -64,17 +63,17 @@ impl<'s, 'c, 'p, 't> SendAudio<'s, 'c, 'p, 't> {
         self
     }
 
-    pub fn parse_mode(&mut self, parse_mode: ParseMode) -> &mut Self {
+    pub fn parse_mode(mut self, parse_mode: ParseMode) -> Self {
         self.parse_mode = Some(parse_mode);
         self
     }
 
-    pub fn duration(&mut self, duration: i64) -> &mut Self {
+    pub fn duration(mut self, duration: i64) -> Self {
         self.duration = Some(duration);
         self
     }
 
-    pub fn performer<T>(&mut self, performer: T) -> &mut Self
+    pub fn performer<T>(mut self, performer: T) -> Self
     where
         T: Into<Cow<'p, str>>,
     {
@@ -82,7 +81,7 @@ impl<'s, 'c, 'p, 't> SendAudio<'s, 'c, 'p, 't> {
         self
     }
 
-    pub fn title<T>(&mut self, title: T) -> &mut Self
+    pub fn title<T>(mut self, title: T) -> Self
     where
         T: Into<Cow<'t, str>>,
     {
@@ -90,7 +89,7 @@ impl<'s, 'c, 'p, 't> SendAudio<'s, 'c, 'p, 't> {
         self
     }
 
-    pub fn reply_to<R>(&mut self, to: R) -> &mut Self
+    pub fn reply_to<R>(mut self, to: R) -> Self
     where
         R: ToMessageId,
     {
@@ -98,7 +97,7 @@ impl<'s, 'c, 'p, 't> SendAudio<'s, 'c, 'p, 't> {
         self
     }
 
-    pub fn reply_markup<R>(&mut self, reply_markup: R) -> &mut Self
+    pub fn reply_markup<R>(mut self, reply_markup: R) -> Self
     where
         R: Into<ReplyMarkup>,
     {
@@ -122,9 +121,8 @@ where
     where
         T: Into<Cow<'s, str>>,
     {
-        let mut req = SendAudio::with_url(self.to_source_chat(), url);
-        req.reply_to(self);
-        req
+        let req = SendAudio::with_url(self.to_source_chat(), url);
+        req.reply_to(self)
     }
 }
 

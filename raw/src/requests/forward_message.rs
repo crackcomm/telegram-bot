@@ -1,7 +1,6 @@
 use std::ops::Not;
 
-use requests::*;
-use types::*;
+use crate::{requests::*, types::*};
 
 /// Use this method to forward messages of any kind.
 #[derive(Debug, Clone, PartialEq, PartialOrd, Serialize)]
@@ -38,7 +37,7 @@ impl ForwardMessage {
         }
     }
 
-    pub fn disable_notification(&mut self) -> &mut Self {
+    pub fn disable_notification(mut self) -> Self {
         self.disable_notification = true;
         self
     }
