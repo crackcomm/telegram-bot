@@ -5,8 +5,9 @@ use telegram_bot_fork_raw::{AllowedUpdate, GetUpdates, Integer, Update};
 
 use crate::{api::Api, errors::Error, Connector};
 
-const TELEGRAM_LONG_POLL_TIMEOUT_SECONDS: u64 = 5;
-const TELEGRAM_LONG_POLL_LIMIT_MESSAGES: Integer = 100;
+const TIMEOUT_SECONDS: u64 = 5;
+const LIMIT_MESSAGES: Integer = 100;
+const ERROR_DELAY_MILLISECONDS: u64 = 500;
 
 /// This type represents stream of Telegram API updates and uses
 /// long polling method under the hood.
@@ -23,16 +24,24 @@ impl<C: Connector> UpdatesStream<C> {
     /// Creates a stream of updates.
     #[async_try_stream(ok = Update, error = Error)]
     pub async fn updates(&mut self) {
-        let request = GetUpdates::new()
-            .offset(self.last_update + 1)
-            .timeout(self.timeout.as_secs() as Integer)
-            .allowed_updates(&self.allowed_updates)
-            .limit(self.limit);
-        let updates = self.api.send_timeout(request, self.timeout).await?;
+        loop {
+            let request = GetUpdates::new()
+                .offset(self.last_update + 1)
+                .timeout(self.timeout.as_secs() as Integer)
+                .allowed_updates(&self.allowed_updates)
+                .limit(self.limit);
 
-        for update in updates {
-            self.last_update = max(update.id, self.last_update);
-            yield update;
+            match self.api.send_timeout(request, self.timeout).await {
+                Ok(updates) => {
+                    for update in updates {
+                        self.last_update = max(update.id, self.last_update);
+                        yield update;
+                    }
+                }
+                Err(_) => {
+                    tokio::time::delay_for(Duration::from_millis(ERROR_DELAY_MILLISECONDS)).await;
+                }
+            }
         }
     }
 }
@@ -46,9 +55,9 @@ impl<C: Connector> NewUpdatesStream<C> for UpdatesStream<C> {
         UpdatesStream {
             api,
             last_update: 0,
-            timeout: Duration::from_secs(TELEGRAM_LONG_POLL_TIMEOUT_SECONDS),
+            timeout: Duration::from_secs(TIMEOUT_SECONDS),
             allowed_updates: Vec::new(),
-            limit: TELEGRAM_LONG_POLL_LIMIT_MESSAGES,
+            limit: LIMIT_MESSAGES,
         }
     }
 }
