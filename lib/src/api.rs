@@ -7,8 +7,8 @@ use crate::connector::Connector;
 use crate::{
     connector::{default_connector, hyper::DefaultConnector},
     errors::Error,
+    stream::{NewUpdatesStream, UpdatesStream},
 };
-// stream::{NewUpdatesStream, UpdatesStream},
 
 /// Default API client type.
 pub type DefaultApi = Api<DefaultConnector>;
@@ -74,31 +74,32 @@ impl<C: Connector> Api<C> {
         self
     }
 
-    // /// Create a stream which produces updates from the Telegram server.
-    // ///
-    // /// # Examples
-    // ///
-    // /// ```rust
-    // /// # extern crate futures;
-    // /// # extern crate telegram_bot_fork;
-    // /// # extern crate tokio;
-    // /// # use telegram_bot_fork::DefaultApi;
-    // ///
-    // /// # #[tokio::main]
-    // /// # pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    // /// # let api = DefaultApi::new_default("token".to_string()).unwrap();
-    // /// use futures::Stream;
-    // ///
-    // /// let future = api.stream().for_each(|update| {
-    // ///     println!("{:?}", update);
-    // ///     Ok(())
-    // /// });
-    // /// Ok(())
-    // /// # }
-    // /// ```
-    // pub fn stream(&self) -> UpdatesStream {
-    //     UpdatesStream::new(self.clone())
-    // }
+    /// Create a stream which produces updates from the Telegram server.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// # #![feature(stmt_expr_attributes, proc_macro_hygiene)]
+    /// # extern crate futures;
+    /// # extern crate telegram_bot_fork;
+    /// # extern crate tokio;
+    /// # use telegram_bot_fork::{DefaultApi, Error};
+    /// # use futures_async_stream::for_await;
+    ///
+    /// # #[tokio::main]
+    /// # pub async fn main() -> Result<(), Error> {
+    /// # let api = DefaultApi::new_default("token".to_string()).unwrap();
+    /// # let mut stream = api.into_stream();
+    /// #[for_await]
+    /// for update in stream.updates() {
+    ///     println!("{:?}", update);
+    /// }
+    /// Ok(())
+    /// # }
+    /// ```
+    pub fn into_stream(self) -> UpdatesStream<C> {
+        UpdatesStream::new(self)
+    }
 
     /// Send a request to the Telegram server and wait for a response, timing out after `duration`.
     /// Future will resolve to `None` if timeout fired.

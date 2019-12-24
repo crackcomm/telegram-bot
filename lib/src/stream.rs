@@ -22,7 +22,7 @@ pub struct UpdatesStream<C: Connector> {
 impl<C: Connector> UpdatesStream<C> {
     /// Creates a stream of updates.
     #[async_try_stream(ok = Update, error = Error)]
-    pub async fn stream(&mut self) {
+    pub async fn updates(&mut self) {
         let request = GetUpdates::new()
             .offset(self.last_update + 1)
             .timeout(self.timeout.as_secs() as Integer)
