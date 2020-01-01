@@ -9,7 +9,7 @@ use hyper::{
 };
 use hyper_tls::HttpsConnector;
 
-use telegram_bot_fork_raw::{
+use telegram_bot_async_raw::{
     Body as TelegramBody, HttpRequest, HttpResponse, Method as TelegramMethod,
 };
 

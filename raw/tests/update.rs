@@ -1,11 +1,11 @@
 extern crate serde;
 extern crate serde_json;
 
-extern crate telegram_bot_fork_raw;
+extern crate telegram_bot_async_raw;
 
 use std::{fs::File, io::prelude::*};
 
-use telegram_bot_fork_raw::types::{
+use telegram_bot_async_raw::types::{
     message::MessageKind,
     update::{Update, UpdateKind},
 };

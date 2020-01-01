@@ -116,7 +116,7 @@ macro_rules! reply_markup {
 
 #[cfg(test)]
 mod tests {
-    use telegram_bot_fork_raw::*;
+    use telegram_bot_async_raw::*;
 
     #[test]
     fn test_simple() {

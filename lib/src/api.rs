@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use telegram_bot_fork_raw::{Request, ResponseType};
+use telegram_bot_async_raw::{Request, ResponseType};
 
 use crate::connector::Connector;
 #[cfg(feature = "hyper_connector")]

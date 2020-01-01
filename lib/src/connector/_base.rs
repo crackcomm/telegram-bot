@@ -2,7 +2,7 @@ use std::fmt::Debug;
 
 use async_trait::async_trait;
 
-use telegram_bot_fork_raw::{HttpRequest, HttpResponse};
+use telegram_bot_async_raw::{HttpRequest, HttpResponse};
 
 use crate::Error;
 

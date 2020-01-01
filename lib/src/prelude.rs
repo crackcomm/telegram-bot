@@ -2,7 +2,7 @@
 //!
 //! This module re-exports request builder traits from telegram-bot-raw.
 
-pub use telegram_bot_fork_raw::{
+pub use telegram_bot_async_raw::{
     CanAnswerCallbackQuery, CanDeleteMessage, CanEditMessageCaption, CanEditMessageLiveLocation,
     CanEditMessageReplyMarkup, CanEditMessageText, CanExportChatInviteLink, CanForwardMessage,
     CanGetChat, CanGetChatAdministrators, CanGetChatMemberForChat, CanGetChatMemberForUser,

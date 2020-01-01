@@ -1,4 +1,4 @@
-use telegram_bot_fork_raw;
+use telegram_bot_async_raw;
 
 /// Telegram bot module error type.
 #[derive(Debug, Fail)]
@@ -9,7 +9,7 @@ pub enum Error {
 
     /// Telegram Raw API error.
     #[fail(display = "api error: {}", _0)]
-    Api(#[cause] telegram_bot_fork_raw::Error),
+    Api(#[cause] telegram_bot_async_raw::Error),
 
     /// Timeout error.
     #[fail(display = "timeout error: {}", _0)]
@@ -42,7 +42,7 @@ macro_rules! err_converter {
 }
 
 err_converter!(Io, std::io::Error);
-err_converter!(Api, telegram_bot_fork_raw::Error);
+err_converter!(Api, telegram_bot_async_raw::Error);
 err_converter!(Timeout, tokio::time::Elapsed);
 #[cfg(feature = "hyper_connector")]
 err_converter!(Hyper, ::hyper::Error);

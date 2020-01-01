@@ -1,14 +1,14 @@
 Rust Telegram Bot Library
 =========================
-[![Build Status](https://img.shields.io/travis/Emulator000/telegram-bot/master.svg)](https://travis-ci.org/Emulator000/telegram-bot)
-[![License](https://img.shields.io/github/license/Emulator000/telegram-bot.svg)]()
-[![Crates.io](https://img.shields.io/crates/v/telegram-bot-fork.svg)](https://crates.io/crates/telegram-bot-fork)
+[![Build Status](https://img.shields.io/travis/crackcomm/telegram-bot/master.svg)](https://travis-ci.org/crackcomm/telegram-bot)
+[![License](https://img.shields.io/github/license/crackcomm/telegram-bot.svg)]()
+[![Crates.io](https://img.shields.io/crates/v/telegram-bot-async.svg)](https://crates.io/crates/telegram-bot-async)
 
 <table>
   <tbody>
     <tr>
       <td><b>Documentation:</b></td>
-      <td><a href="https://docs.rs/telegram-bot-fork/">Latest crates.io version</a></td>
+      <td><a href="https://docs.rs/telegram-bot-async/">Latest crates.io version</a></td>
     </tr>
   </tbody>
 </table>
@@ -16,18 +16,18 @@ Rust Telegram Bot Library
 A library for writing your own [Telegram](https://telegram.org/) bots. More information [here](https://core.telegram.org/bots). Official API [here](https://core.telegram.org/bots/api).
 
 ## Example
-Here is a simple example (see [`example/simple.rs`](https://github.com/Emulator000/telegram-bot/blob/master/lib/examples/simple.rs)):
+Here is a simple example (see [`example/simple.rs`](https://github.com/crackcomm/telegram-bot/blob/master/lib/examples/simple.rs)):
 
 ``` rust
 extern crate futures;
-extern crate telegram_bot_fork;
+extern crate telegram_bot_async;
 extern crate tokio;
 
 use std::env;
 
 use futures::{Stream, future::lazy};
 
-use telegram_bot_fork::*;
+use telegram_bot_async::*;
 
 fn main() {
     tokio::runtime::current_thread::Runtime::new().unwrap().block_on(lazy(|| {
@@ -72,8 +72,8 @@ You can find a bigger examples in the `examples`.
 This library is available via `crates.io`. In order to use it, just add this to your `Cargo.toml`:
 
 ```
-telegram-bot-fork = "0.7"
+telegram-bot-async = "0.7"
 ```
 
 ## Collaboration
-Yes please! Every type of contribution is welcome: Create issues, hack some code or make suggestions. Don't know where to start? Good first issues are tagged with [up for grab](https://github.com/Emulator000/telegram-bot/issues?q=is%3Aissue+is%3Aopen+label%3A%22up+for+grab%22).
+Yes please! Every type of contribution is welcome: Create issues, hack some code or make suggestions. Don't know where to start? Good first issues are tagged with [up for grab](https://github.com/crackcomm/telegram-bot/issues?q=is%3Aissue+is%3Aopen+label%3A%22up+for+grab%22).

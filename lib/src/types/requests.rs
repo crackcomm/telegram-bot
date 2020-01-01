@@ -1,6 +1,6 @@
 //! Telegram Bot API methods.
 
-pub use telegram_bot_fork_raw::{
+pub use telegram_bot_async_raw::{
     AnswerCallbackQuery, CanExportChatInviteLink, DeleteMessage, EditMessageCaption,
     EditMessageLiveLocation, EditMessageReplyMarkup, EditMessageText, ExportChatInviteLink,
     ForwardMessage, GetChat, GetChatAdministrators, GetChatMember, GetChatMembersCount, GetFile,

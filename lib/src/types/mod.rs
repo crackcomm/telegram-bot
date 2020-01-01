@@ -3,7 +3,7 @@
 pub mod requests;
 pub use requests::*;
 
-pub use telegram_bot_fork_raw::{
+pub use telegram_bot_async_raw::{
     AllowedUpdate, Audio, CallbackQuery, CallbackQueryId, Channel, ChannelId, ChannelPost, Chat,
     ChatId, ChatRef, Contact, DetachedRequest, Document, File, FileRef, Float, Forward,
     ForwardFrom, Group, GroupId, Integer, JsonIdResponse, JsonResponse, JsonTrueToUnitResponse,
@@ -13,7 +13,7 @@ pub use telegram_bot_fork_raw::{
     UpdateKind, User, UserId, Venue, Video, Voice,
 };
 
-pub use telegram_bot_fork_raw::{
+pub use telegram_bot_async_raw::{
     ChatAction, ChatMember, ChatMemberStatus, ForceReply, InlineKeyboardButton,
     InlineKeyboardMarkup, KeyboardButton, ParseMode, ReplyKeyboardMarkup, ReplyKeyboardRemove,
     ReplyMarkup,

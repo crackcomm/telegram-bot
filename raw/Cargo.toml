@@ -1,12 +1,17 @@
 [package]
-name = "telegram-bot-fork-raw"
-version = "0.7.8"
-authors = ["Lukas Kalbertodt <lukas.kalbertodt@gmail.com>", "Fedor Gogolev <knsd@knsd.net>", "Emulator000 <emulator@hotmail.it>"]
+name = "telegram-bot-async-raw"
+version = "0.8.2"
+authors = [
+  "Lukas Kalbertodt <lukas.kalbertodt@gmail.com>",
+  "Fedor Gogolev <knsd@knsd.net>",
+  "Emulator000 <emulator@hotmail.it>",
+  "Łukasz Kurowski <crackcomm@gmail.com>",
+]
 
 description = "Telegram Bot API types"
 
-documentation = "https://docs.rs/telegram-bot-fork-raw/"
-repository = "https://github.com/Emulator000/telegram-bot"
+documentation = "https://docs.rs/telegram-bot-async-raw/"
+repository = "https://github.com/crackcomm/telegram-bot"
 readme = "../README.md"
 
 keywords = ["telegram", "bot", "chat", "api"]

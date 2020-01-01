@@ -7,7 +7,7 @@ extern crate antidote;
 extern crate failure;
 extern crate futures;
 extern crate http;
-extern crate telegram_bot_fork_raw;
+extern crate telegram_bot_async_raw;
 extern crate tokio;
 
 #[cfg(feature = "hyper_connector")]

@@ -1,10 +1,15 @@
 [package]
-name = "telegram-bot-fork"
-version = "0.8.0"
-authors = ["Lukas Kalbertodt <lukas.kalbertodt@gmail.com>", "Fedor Gogolev <knsd@knsd.net>", "Emulator000 <emulator@hotmail.it>"]
+name = "telegram-bot-async"
+version = "0.8.2"
+authors = [
+  "Lukas Kalbertodt <lukas.kalbertodt@gmail.com>",
+  "Fedor Gogolev <knsd@knsd.net>",
+  "Emulator000 <emulator@hotmail.it>",
+  "Łukasz Kurowski <crackcomm@gmail.com>"
+]
 description = "A library for creating Telegram bots"
-documentation = "https://docs.rs/telegram-bot-fork/"
-repository = "https://github.com/Emulator000/telegram-bot"
+documentation = "https://docs.rs/telegram-bot-async/"
+repository = "https://github.com/crackcomm/telegram-bot"
 readme = "../README.md"
 keywords = ["telegram", "bot", "chat", "api"]
 categories = ["api-bindings", "asynchronous"]
@@ -13,15 +18,15 @@ edition = "2018"
 
 [dependencies]
 futures = "^0.3.1"
-futures-async-stream = "0.1"
+futures-async-stream = "^0.1"
 antidote = "^1.0"
 failure = "^0.1.5"
 http = "^0.1"
-telegram-bot-fork-raw = { version = "=0.7.8", path = "../raw" }
+telegram-bot-async-raw = { version = "=0.8.2", path = "../raw" }
 hyper-tls = { version = "^0.4.0", optional = true }
-tokio = { version = "0.2.4", features = ["full"] }
+tokio = { version = "^0.2.6", features = ["full"] }
 
-async-trait = "0.1.21"
+async-trait = "^0.1.21"
 
 [dependencies.hyper]
 optional = true

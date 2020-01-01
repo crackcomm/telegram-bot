@@ -1,7 +1,7 @@
 use std::{cmp::max, time::Duration};
 
 use futures_async_stream::async_try_stream;
-use telegram_bot_fork_raw::{AllowedUpdate, GetUpdates, Integer, Update};
+use telegram_bot_async_raw::{AllowedUpdate, GetUpdates, Integer, Update};
 
 use crate::{api::Api, errors::Error, Connector};
 
